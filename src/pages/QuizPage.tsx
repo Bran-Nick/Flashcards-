@@ -6,12 +6,14 @@ import QuizSession from '../features/study/components/QuizSession';
 import StudyFinished from '../features/study/components/StudyFinished';
 import '../features/study/styles/study.css';
 import { useProgressStore } from '../features/progress/store/useProgresseStore';
+import { usePageTitle } from "../hooks/usePageTitle";
 
 function shuffleCards<T>(items: T[]): T[] {
   return [...items].sort(() => Math.random() - 0.5);
 }
 
 export default function QuizPage() {
+  usePageTitle("Modo Quiz");
   const cards = useCardStore((state) => state.cards);
   const registerSession = useProgressStore((state) => state.registerSession);
 

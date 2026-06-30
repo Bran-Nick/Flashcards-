@@ -5,8 +5,11 @@ import {
 } from 'lucide-react';
 import { useCardStore } from '../features/cards/store';
 import CardList from '../features/cards/components/CardList';
+import { usePageTitle } from "../hooks/usePageTitle";
 
 export default function CardsPage() {
+  usePageTitle("Mis Tarjetas");
+
   const cards = useCardStore((state) => state.cards);
   const deleteCard = useCardStore((state) => state.deleteCard);
   const resetCards = useCardStore((state) => state.resetCards);

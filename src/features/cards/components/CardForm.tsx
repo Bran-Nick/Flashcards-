@@ -3,12 +3,15 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Tag, Eye, ShieldAlert } from 'lucide-react';
 import { useCardStore } from '../store';
 import type { CardDifficulty } from '../types';
+import { usePageTitle } from '../../../hooks/usePageTitle';
 
 export default function CardForm() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const isEditing = !!id;
 
+  usePageTitle(isEditing ? 'Editar tarjeta' : 'Crear tarjeta');
+  
   const cards = useCardStore((state) => state.cards);
   const addCard = useCardStore((state) => state.addCard);
   const editCard = useCardStore((state) => state.editCard);

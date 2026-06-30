@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Flame, Trophy, CheckCircle2, XCircle, TrendingUp, Calendar } from 'lucide-react';
 import { useProgressStats } from '../features/progress/hooks/useProgressStats';
+import { usePageTitle } from "../hooks/usePageTitle";
 
 export default function ProgressPage() {
+  usePageTitle("Progreso");
   const {
     currentStreak,
     bestStreak,

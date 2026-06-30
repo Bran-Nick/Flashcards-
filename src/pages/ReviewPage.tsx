@@ -6,8 +6,11 @@ import DeckSelector from '../features/study/components/DeckSelector';
 import ReviewSession from '../features/study/components/ReviewSession';
 import StudyFinished from '../features/study/components/StudyFinished';
 import '../features/study/styles/study.css';
+import { usePageTitle } from "../hooks/usePageTitle";
+
 
 export default function ReviewPage() {
+  usePageTitle("Modo Repaso");
   const cards = useCardStore((state) => state.cards);
 
   const [currentIndex, setCurrentIndex] = useState(0);

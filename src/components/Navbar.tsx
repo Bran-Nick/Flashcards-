@@ -1,14 +1,13 @@
 import { NavLink } from 'react-router-dom';
-import { BookOpen, PlusCircle, RefreshCw, HelpCircle, Home, BarChart3 } from 'lucide-react';
+import { BookOpen, Layers, Brain, HelpCircle, Home, BarChart3 } from 'lucide-react';
 import { ThemeToggle } from '../features/night-or-day/night-or-day';
 
 export default function Navbar() {
   const navItems = [
     { to: '/', name: 'Inicio', icon: Home, exact: true },
-    { to: '/cards', name: 'Tarjetas', icon: BookOpen, exact: false },
-    { to: '/new', name: 'Nueva Tarjeta', icon: PlusCircle, exact: false },
-    { to: '/study/review', name: 'Repaso (I2)', icon: RefreshCw, exact: false },
-    { to: '/study/quiz', name: 'Quiz (I2)', icon: HelpCircle, exact: false },
+    { to: '/cards', name: 'Mis Tarjetas', icon: Layers, exact: false },
+    { to: '/study/review', name: 'Modo Repaso', icon: Brain, exact: false },
+    { to: '/study/quiz', name: 'Modo Quiz', icon: HelpCircle, exact: false },
     { to: '/progress', name: 'Progreso', icon: BarChart3, exact: false },
   ];
 
