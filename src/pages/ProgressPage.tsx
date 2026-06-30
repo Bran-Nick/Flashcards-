@@ -139,7 +139,7 @@ export default function ProgressPage() {
                   <p className="text-slate-500">{date}</p>
                   <p className="text-emerald-500 font-semibold">{session.hits} aciertos</p>
                   <p className="text-rose-500 font-semibold">{session.misses} errores</p>
-                  <p className="text-slate-800 font-bold">{pct}%</p>
+                  <p className="text-slate-800 dark:text-white font-bold">{pct}%</p>
                 </div>
               );
             })}
