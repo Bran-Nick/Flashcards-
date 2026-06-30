@@ -181,7 +181,7 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
             onClick={onClose}
             className="px-4 py-2 rounded-xl border border-slate-800 text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-900 transition-all"
           >
-            Cerrar
+            Volver
           </button>
         </div>
       </div>
