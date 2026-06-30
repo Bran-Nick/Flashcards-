@@ -49,7 +49,7 @@ export default function ProgressPage() {
             <Flame size={20} />
             <p className="text-xs font-bold uppercase tracking-wider">Racha actual</p>
           </div>
-          <p className="text-4xl font-extrabold text-white">
+          <p className="text-4xl font-extrabold text-white text-center">
             {currentStreak} <span className="text-lg font-semibold text-slate-400">días</span>
           </p>
           {currentStreak === 0 && (
@@ -62,7 +62,7 @@ export default function ProgressPage() {
             <Trophy size={20} />
             <p className="text-xs font-bold uppercase tracking-wider">Mejor racha</p>
           </div>
-          <p className="text-4xl font-extrabold text-white">
+          <p className="text-4xl font-extrabold text-white text-center">
             {bestStreak} <span className="text-lg font-semibold text-slate-400">días</span>
           </p>
         </div>
@@ -72,7 +72,7 @@ export default function ProgressPage() {
             <TrendingUp size={20} />
             <p className="text-xs font-bold uppercase tracking-wider">Progreso general</p>
           </div>
-          <p className="text-4xl font-extrabold text-white">{accuracyPercentage}%</p>
+          <p className="text-4xl font-extrabold text-white text-center">{accuracyPercentage}%</p>
           <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
             <div
               className={`h-full rounded-full transition-all duration-500 ${barColor}`}
@@ -141,7 +141,7 @@ export default function ProgressPage() {
                   <p className="text-slate-500">{date}</p>
                   <p className="text-emerald-500 font-semibold">{session.hits} aciertos</p>
                   <p className="text-rose-500 font-semibold">{session.misses} errores</p>
-                  <p className="text-slate-800 font-bold">{pct}%</p>
+                  <p className="text-slate-800 dark:text-white font-bold">{pct}%</p>
                 </div>
               );
             })}
