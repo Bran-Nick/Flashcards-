@@ -39,8 +39,8 @@ export default function HomeSummary() {
               <p className="text-sm font-bold text-slate-500 mt-1">Sin datos</p>
             ) : (
               <div className="mt-1 space-y-1">
-                <p className="text-sm font-bold text-white">{accuracyPercentage}%</p>
-                <div className="h-1.5 w-24 bg-slate-800 rounded-full overflow-hidden">
+                <p className="text-sm font-bold text-white text-center">{accuracyPercentage}%</p>
+                <div className="h-1.5 w-24 bg-slate-800 rounded-full overflow-hidden mx-auto">
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${barColor}`}
                     style={{ width: `${accuracyPercentage}%` }}
@@ -58,7 +58,7 @@ export default function HomeSummary() {
             <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">
               Aciertos
             </p>
-            <p className="text-sm font-bold text-emerald-400 mt-1">{totalHits}</p>
+            <p className="text-sm font-bold text-emerald-400 mt-1 text-center">{totalHits}</p>
           </div>
         </div>
 
@@ -69,7 +69,7 @@ export default function HomeSummary() {
             <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">
               Errores
             </p>
-            <p className="text-sm font-bold text-rose-400 mt-1">{totalMisses}</p>
+            <p className="text-sm font-bold text-rose-400 mt-1 text-center">{totalMisses}</p>
           </div>
         </div>
 
@@ -80,12 +80,12 @@ export default function HomeSummary() {
             <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">
               Racha actual
             </p>
-            <p className="text-sm font-bold text-white mt-1">
+            <p className="text-sm font-bold text-white mt-1 text-center">
               {currentStreak} {currentStreak === 1 ? 'día' : 'días'}
               {currentStreak > 0 && ' 🔥'}
             </p>
             {bestStreak > 0 && (
-              <p className="text-[10px] text-slate-500">
+              <p className="text-[10px] text-slate-500 text-center">
                 Mejor: {bestStreak} días
               </p>
             )}
