@@ -105,7 +105,7 @@ export default function ProgressPage() {
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
              Total respuestas
             </span>
-            <p className="text-2xl font-extrabold text-slate-800">{totalAnswers}</p>
+            <p className="text-2xl font-extrabold text-slate-800 dark:text-white">{totalAnswers}</p>
           </div>
         </div>
       </div>
