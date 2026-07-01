@@ -37,7 +37,7 @@ export default function PageHeader({
         )}
       </div>
 
-      <div className="flex shrink-0 flex-col items-start gap-4 md:items-end md:pt-1">
+      <div className="flex shrink-0 flex-col items-start gap-4 md:items-end">
         {backTo && (
           <Link
             to={backTo}
@@ -49,7 +49,7 @@ export default function PageHeader({
         )}
 
         {actions && (
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="mt-3 flex flex-wrap items-center gap-3">
             {actions}
           </div>
         )}

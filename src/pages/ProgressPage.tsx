@@ -30,39 +30,47 @@ export default function ProgressPage() {
 
       {/* Header */}
       <PageHeader
-  title="Tu progreso"
-  subtitle="Estadísticas generales y rachas de estudio."
-  backTo="/"
-/>
+        title="Tu progreso"
+        subtitle="Estadísticas generales y rachas de estudio."
+        backTo="/"
+      />
 
       {/* Tarjetas superiores: racha actual, mejor racha, progreso */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-        <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 space-y-2">
-          <div className="flex items-center gap-2 text-orange-400">
+        <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-7 space-y-3">
+          <div className="flex items-center justify-center gap-2 text-orange-400">
             <Flame size={20} />
             <p className="text-xs font-bold uppercase tracking-wider">Racha actual</p>
           </div>
-          <p className="text-4xl font-extrabold text-white text-center">
-            {currentStreak} <span className="text-lg font-semibold text-slate-400">días</span>
-          </p>
+          <div className="flex flex-1 flex-col justify-center">
+            <p className="text-center text-4xl font-extrabold text-white">
+              {currentStreak}
+              <span className="ml-2 text-lg font-semibold text-slate-400">
+                días
+              </span>
+            </p>
+          </div>
           {currentStreak === 0 && (
             <p className="text-xs text-slate-500">Completá un quiz para iniciar tu racha.</p>
           )}
         </div>
 
-        <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 space-y-2">
-          <div className="flex items-center gap-2 text-yellow-400">
+        <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-7 space-y-3">
+          <div className="flex items-center justify-center gap-2 text-yellow-400">
             <Trophy size={20} />
             <p className="text-xs font-bold uppercase tracking-wider">Mejor racha</p>
           </div>
-          <p className="text-4xl font-extrabold text-white text-center">
-            {bestStreak} <span className="text-lg font-semibold text-slate-400">días</span>
+          <p className="text-center text-4xl font-extrabold text-white">
+            {bestStreak}
+            <span className="ml-2 text-lg font-semibold text-slate-400">
+              días
+            </span>
           </p>
         </div>
 
         <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 space-y-2">
-          <div className="flex items-center gap-2 text-violet-400">
+          <div className="flex items-center justify-center gap-2 text-violet-400">
             <TrendingUp size={20} />
             <p className="text-xs font-bold uppercase tracking-wider">Progreso general</p>
           </div>
@@ -98,8 +106,8 @@ export default function ProgressPage() {
             <p className="text-2xl font-extrabold text-rose-400">{totalMisses}</p>
           </div>
           <div className="rounded-xl border border-slate-500/20 bg-slate-500/5 p-4 text-center space-y-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
-             Total respuestas
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300">
+              Total respuestas
             </span>
             <p className="text-2xl font-extrabold text-slate-800 dark:text-white">{totalAnswers}</p>
           </div>
@@ -130,9 +138,11 @@ export default function ProgressPage() {
               return (
                 <div
                   key={index}
-                  className="grid grid-cols-4 gap-4 rounded-xl border border-slate-500/20 bg-slate-500/5 px-4 py-3 text-sm"
+                  className="grid grid-cols-[1fr_1fr_1fr_1fr] items-center rounded-xl border border-slate-500/20 bg-slate-500/5 px-4 py-3 text-sm text-center"
                 >
-                  <p className="text-slate-500">{date}</p>
+                  <p className="text-slate-500 dark:text-slate-300">
+                    {date}
+                  </p>
                   <p className="text-emerald-500 font-semibold">{session.hits} aciertos</p>
                   <p className="text-rose-500 font-semibold">{session.misses} errores</p>
                   <p className="text-slate-800 dark:text-white font-bold">{pct}%</p>
