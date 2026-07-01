@@ -4,6 +4,8 @@ import { ArrowLeft, Tag, Eye, ShieldAlert } from 'lucide-react';
 import { useCardStore } from '../store';
 import type { CardDifficulty } from '../types';
 import { usePageTitle } from '../../../hooks/usePageTitle';
+import PageHeader from '../../../components/PageHeader';
+import PageShell from '../../../components/PageShell';
 
 export default function CardForm() {
   const { id } = useParams<{ id: string }>();
@@ -11,7 +13,7 @@ export default function CardForm() {
   const isEditing = !!id;
 
   usePageTitle(isEditing ? 'Editar tarjeta' : 'Crear tarjeta');
-  
+
   const cards = useCardStore((state) => state.cards);
   const addCard = useCardStore((state) => state.addCard);
   const editCard = useCardStore((state) => state.editCard);
@@ -74,25 +76,18 @@ export default function CardForm() {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto p-6 md:p-10 space-y-8 flex flex-col max-w-5xl mx-auto w-full">
+    <PageShell size="default">
       {/* Navigation Header */}
-      <div className="space-y-4 shrink-0">
-        <Link 
-          to="/cards" 
-          className="text-slate-400 hover:text-white inline-flex items-center gap-2 text-sm font-semibold transition-colors"
-        >
-          <ArrowLeft size={16} /> Volver al Listado
-        </Link>
-
-        <div className="border-b border-slate-900 pb-6">
-          <h2 className="text-3xl font-extrabold text-white tracking-tight">
-            {isEditing ? 'Editar Tarjeta de Estudio' : 'Crear Nueva Tarjeta'}
-          </h2>
-          <p className="text-slate-400 mt-1">
-            {isEditing ? 'Actualiza los campos de tu tarjeta para modificar tu mazo.' : 'Define una pregunta y una respuesta para guardar en tu biblioteca.'}
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        title={isEditing ? 'Editar Tarjeta de Estudio' : 'Crear Nueva Tarjeta'}
+        subtitle={
+          isEditing
+            ? 'Actualiza los campos de tu tarjeta para modificar tu mazo.'
+            : 'Define una pregunta y una respuesta para guardar en tu biblioteca.'
+        }
+        backTo="/cards"
+        backLabel="Volver al listado"
+      />
 
       {/* Form + Preview Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -155,15 +150,14 @@ export default function CardForm() {
                     key={level}
                     type="button"
                     onClick={() => setDifficulty(level)}
-                    className={`py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
-                      difficulty === level
+                    className={`py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${difficulty === level
                         ? level === 'easy'
                           ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
                           : level === 'medium'
-                          ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                          : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+                            ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                            : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
                         : 'text-slate-500 hover:text-slate-300'
-                    }`}
+                      }`}
                   >
                     {level === 'easy' ? 'Fácil' : level === 'medium' ? 'Medio' : 'Difícil'}
                   </button>
@@ -198,18 +192,16 @@ export default function CardForm() {
               <button
                 type="button"
                 onClick={() => setPreviewSide('front')}
-                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${
-                  previewSide === 'front' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-slate-200'
-                }`}
+                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${previewSide === 'front' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                  }`}
               >
                 Anverso
               </button>
               <button
                 type="button"
                 onClick={() => setPreviewSide('back')}
-                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${
-                  previewSide === 'back' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-slate-200'
-                }`}
+                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${previewSide === 'back' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                  }`}
               >
                 Reverso
               </button>
@@ -251,6 +243,6 @@ export default function CardForm() {
           </div>
         </div>
       </div>
-    </div>
+    </PageShell>
   );
 }

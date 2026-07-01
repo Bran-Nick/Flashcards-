@@ -6,6 +6,8 @@ import {
 import { useCardStore } from '../features/cards/store';
 import CardList from '../features/cards/components/CardList';
 import { usePageTitle } from "../hooks/usePageTitle";
+import PageHeader from '../components/PageHeader';
+import PageShell from '../components/PageShell';
 
 export default function CardsPage() {
   usePageTitle("Mis Tarjetas");
@@ -47,39 +49,45 @@ export default function CardsPage() {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto p-6 md:p-10 space-y-8 flex flex-col">
+    <div className="flex-1 overflow-y-auto">
+  <PageShell size="wide">
       {/* Welcome Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-900 shrink-0">
-        <div>
-          <h2 className="text-3xl font-extrabold text-white tracking-tight">Mis Tarjetas</h2>
-          <p className="text-slate-400 mt-2 flex flex-wrap items-center gap-2">
-            <span>Administra tus tarjetas de estudio.</span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 text-[11px] font-bold font-mono rounded-full bg-slate-900 border border-slate-800 text-violet-400">
-              <BookOpen size={12} />
-              {totalCards} {totalCards === 1 ? 'tarjeta' : 'tarjetas'} • {topics.length} {topics.length === 1 ? 'tema' : 'temas'}
-            </span>
-          </p>
-        </div>
-        
-        <div className="flex gap-3 shrink-0 self-start md:self-auto">
-          <button
-            onClick={handleReset}
-            className="flex items-center justify-center gap-1.5 border border-slate-900 hover:bg-slate-900 text-slate-400 hover:text-slate-200 font-semibold text-xs px-4 py-2.5 rounded-xl transition-all"
-            title="Reiniciar base de datos a tarjetas semillas"
-          >
-            <RotateCcw size={14} />
-            Restaurar Semillas
-          </button>
-          
-          <Link
-            to="/new"
-            className="flex items-center justify-center gap-2 bg-violet-600 hover:bg-violet-500 active:bg-violet-700 text-white font-semibold text-xs px-5 py-2.5 rounded-xl transition-all shadow-lg shadow-violet-600/25 active:scale-[0.98]"
-          >
-            <Plus size={16} />
-            Nueva Tarjeta
-          </Link>
-        </div>
-      </div>
+   <PageHeader
+  title="Mis Tarjetas"
+  subtitle={
+    <div className="flex flex-wrap items-center gap-2">
+      <span>Administra tus tarjetas de estudio.</span>
+
+      <span className="inline-flex items-center gap-1.5 px-3 py-0.5 text-[11px] font-bold font-mono rounded-full bg-slate-900 border border-slate-800 text-violet-400">
+        <BookOpen size={12} />
+        {totalCards} {totalCards === 1 ? 'tarjeta' : 'tarjetas'} •{" "}
+        {topics.length} {topics.length === 1 ? 'tema' : 'temas'}
+      </span>
+    </div>
+  }
+  backTo="/"
+  showDivider={false}
+  actions={
+    <>
+      <button
+        onClick={handleReset}
+        className="flex items-center justify-center gap-1.5 border border-slate-900 hover:bg-slate-900 text-slate-400 hover:text-slate-200 font-semibold text-xs px-4 py-2.5 rounded-xl transition-all"
+        title="Reiniciar base de datos a tarjetas semillas"
+      >
+        <RotateCcw size={14} />
+        Restaurar Semillas
+      </button>
+
+      <Link
+        to="/new"
+        className="flex items-center justify-center gap-2 bg-violet-600 hover:bg-violet-500 active:bg-violet-700 text-white font-semibold text-xs px-5 py-2.5 rounded-xl transition-all shadow-lg shadow-violet-600/25 active:scale-[0.98]"
+      >
+        <Plus size={16} />
+        Nueva Tarjeta
+      </Link>
+    </>
+  }
+/>
 
       {/* Filters and Controls */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-slate-900/10 border border-slate-900/40 p-4 rounded-2xl shrink-0">
@@ -125,6 +133,7 @@ export default function CardsPage() {
         searchTerm={searchTerm}
         selectedTopic={selectedTopic}
       />
+    </PageShell>
     </div>
   );
 }

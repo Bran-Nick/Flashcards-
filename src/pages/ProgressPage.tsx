@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom';
-import { ArrowLeft, Flame, Trophy, CheckCircle2, XCircle, TrendingUp, Calendar } from 'lucide-react';
+import { Flame, Trophy, CheckCircle2, XCircle, TrendingUp, Calendar } from 'lucide-react';
 import { useProgressStats } from '../features/progress/hooks/useProgressStats';
 import { usePageTitle } from "../hooks/usePageTitle";
+import PageHeader from '../components/PageHeader';
+import PageShell from '../components/PageShell';
 
 export default function ProgressPage() {
   usePageTitle("Progreso");
@@ -25,21 +26,14 @@ export default function ProgressPage() {
           : 'bg-rose-500';
 
   return (
-    <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8 space-y-8">
+    <PageShell size="narrow">
 
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <Link
-          to="/"
-          className="p-2 rounded-xl border border-slate-800 text-slate-400 hover:text-white hover:border-slate-600 transition-all"
-        >
-          <ArrowLeft size={18} />
-        </Link>
-        <div>
-          <h1 className="text-2xl font-extrabold text-white">Tu progreso</h1>
-          <p className="text-sm text-slate-400">Estadísticas generales y rachas de estudio.</p>
-        </div>
-      </div>
+      <PageHeader
+  title="Tu progreso"
+  subtitle="Estadísticas generales y rachas de estudio."
+  backTo="/"
+/>
 
       {/* Tarjetas superiores: racha actual, mejor racha, progreso */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -149,6 +143,6 @@ export default function ProgressPage() {
         )}
       </div>
 
-    </div>
+    </PageShell>
   );
 }
