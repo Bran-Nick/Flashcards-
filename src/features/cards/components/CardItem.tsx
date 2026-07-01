@@ -24,7 +24,7 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
 
   return (
     <>
-      <div className="group relative rounded-2xl border border-slate-900 bg-slate-900/10 p-5 md:p-6 space-y-4 hover:border-slate-800/80 hover:bg-slate-900/20 transition-all duration-300">
+      <div className="group relative rounded-2xl border border-slate-800 bg-slate-900/40 p-5 md:p-6 space-y-4 hover:border-violet-500/40 hover:bg-slate-900/60 transition-all duration-300">
         {/* Background glow animation on hover */}
         <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-tr from-violet-600/0 via-indigo-600/0 to-violet-600/0 group-hover:from-violet-600/2 group-hover:to-indigo-600/2 opacity-0 group-hover:opacity-100 transition-all duration-300" />
 

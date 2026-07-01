@@ -22,7 +22,7 @@ export default function PageHeader({
   return (
     <div
       className={`flex flex-col gap-6 pb-6 md:flex-row md:items-start md:justify-between ${
-        showDivider ? 'border-b border-slate-900' : ''
+        showDivider ? 'border-b border-slate-200 dark:border-slate-700' : ''
       }`}
     >
       <div>

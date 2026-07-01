@@ -1,4 +1,4 @@
-import { TrendingUp, CheckCircle2, XCircle, Flame } from 'lucide-react';
+import { ArrowRight, TrendingUp, CheckCircle2, XCircle, Flame } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useProgressStats } from '../hooks/useProgressStats';
 
@@ -23,8 +23,11 @@ export default function HomeSummary() {
           : 'bg-rose-500';
 
   return (
-  <div className="relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/40 p-6">
-    <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-violet-800/10 blur-3xl pointer-events-none" />
+  <Link
+  to="/progress"
+  className="group relative block overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/40 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/50 hover:shadow-[0_12px_30px_rgba(139,92,246,0.15)]"
+>
+    <div className="pointer-events-none absolute top-0 right-0 h-40 w-40 rounded-full bg-violet-800/10 blur-3xl opacity-70 transition-opacity duration-300 group-hover:opacity-100" />
 
     <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_1fr_1fr_1.15fr_auto] md:items-center">
       {/* Progreso */}
@@ -84,13 +87,22 @@ export default function HomeSummary() {
         </div>
       </div>
 
-      <Link
-        to="/progress"
-        className="justify-self-center text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors whitespace-nowrap"
-      >
-        Ver más →
-      </Link>
-    </div>
+      <div className="flex justify-end">
+  <div
+    className="
+      flex h-8 w-8 items-center justify-center
+      rounded-full
+      bg-slate-800
+      text-slate-300
+      transition-all duration-300
+      group-hover:bg-violet-600
+      group-hover:text-white
+    "
+  >
+    <ArrowRight size={18} />
   </div>
+</div>
+    </div>
+  </Link>
 );
 }
