@@ -42,7 +42,7 @@ export default function StudyLayout({
 
   return (
     <>
-      <div className="mx-auto mt-9 w-full max-w-5xl px-12">
+      <div className="mx-auto mt-8 w-full max-w-5xl px-12">
         <PageHeader
           title={title}
           subtitle={subtitle}

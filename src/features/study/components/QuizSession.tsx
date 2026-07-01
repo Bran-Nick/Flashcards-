@@ -106,9 +106,16 @@ export default function QuizSession({
               <button
   onClick={onShowAnswer}
   disabled={!canRevealAnswer}
-  className="rounded-xl bg-violet-600 px-6 py-3 font-semibold !text-white transition-colors hover:bg-violet-500 disabled:cursor-not-allowed disabled:bg-slate-400 disabled:hover:bg-slate-400 dark:disabled:bg-slate-700"
+  className={`
+    reveal-button
+    rounded-xl
+    px-6 py-3
+    font-semibold
+    !text-white
+    ${canRevealAnswer ? "bg-violet-600 hover:bg-violet-500" : "is-loading"}
+  `}
 >
-  Ver respuesta
+  <span className="relative z-10">Ver respuesta</span>
 </button>
             </div>
           ) : (

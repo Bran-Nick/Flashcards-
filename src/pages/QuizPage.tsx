@@ -33,7 +33,7 @@ export default function QuizPage() {
 
     const timer = setTimeout(() => {
       setCanRevealAnswer(true);
-    }, 2500);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [currentIndex, selectedTopic, isSessionFinished]);
