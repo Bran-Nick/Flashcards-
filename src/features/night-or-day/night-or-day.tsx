@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
 
-export function ThemeToggle() {
+type ThemeToggleProps = {
+  showLabel?: boolean;
+};
+
+export function ThemeToggle({ showLabel }: ThemeToggleProps) {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     return (localStorage.getItem('theme') as 'light' | 'dark') || 'dark';
   });
@@ -115,14 +119,25 @@ export function ThemeToggle() {
 
   return (
     <button
+      type="button"
       onClick={toggleTheme}
-      className="p-2 rounded-xl border border-slate-200 dark:border-slate-900 bg-white/50 dark:bg-slate-950/40 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900/60 transition-all duration-200 flex items-center justify-center cursor-pointer shadow-sm ml-1"
+      className={
+        showLabel
+  ? "w-full flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-400 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900/40 focus:bg-transparent active:bg-slate-100 dark:active:bg-slate-900/40 border border-transparent transition-all duration-200 cursor-pointer"
+          : "p-2 rounded-xl border border-slate-200 dark:border-slate-900 bg-white/50 dark:bg-slate-950/40 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900/60 transition-all duration-200 flex items-center justify-center cursor-pointer shadow-sm ml-1"
+      }
       title={theme === 'dark' ? 'Cambiar a modo día' : 'Cambiar a modo noche'}
     >
       {theme === 'dark' ? (
         <Sun size={16} className="text-amber-500" />
       ) : (
-        <Moon size={16} className="text-violet-500" />
+        <Moon size={16} className={showLabel ? 'text-slate-600 dark:text-slate-300' : 'text-violet-500'} />
+      )}
+
+      {showLabel && (
+        <span>
+          Cambiar Tema
+        </span>
       )}
     </button>
   );
