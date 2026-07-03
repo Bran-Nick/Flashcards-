@@ -37,14 +37,17 @@ export default function CardForm() {
     setDifficulty(card?.difficulty || 'medium');
   }
 
-  if (isEditing && !card) {
+   if (isEditing && !card) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
-        <ShieldAlert className="text-rose-500 h-12 w-12 mb-4" />
+      <div className="flex-1 flex flex-col items-center justify-center p-6 text-center" role="alert">
+        <ShieldAlert aria-hidden="true" className="text-rose-500 h-12 w-12 mb-4" />
         <h3 className="text-xl font-bold">Tarjeta no encontrada</h3>
         <p className="text-slate-400 mt-2">La tarjeta con ID "{id}" no existe en el store.</p>
-        <Link to="/cards" className="text-violet-400 hover:underline mt-4 flex items-center gap-1.5 font-semibold">
-          <ArrowLeft size={16} /> Volver al Listado
+        <Link
+          to="/cards"
+          className="text-violet-400 hover:underline mt-4 flex items-center gap-1.5 font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded-lg"
+        >
+          <ArrowLeft aria-hidden="true" size={16} /> Volver al Listado
         </Link>
       </div>
     );
@@ -84,7 +87,6 @@ export default function CardForm() {
 
   return (
     <PageShell size="default">
-      {/* Navigation Header */}
       <PageHeader
         title={isEditing ? 'Editar Tarjeta' : 'Crear Nueva Tarjeta'}
         subtitle={
@@ -97,20 +99,20 @@ export default function CardForm() {
         backLabel="Volver al listado"
       />
 
-      {/* Mobile layout */}
-      <form onSubmit={handleSubmit} className="md:hidden space-y-5">
+      <form onSubmit={handleSubmit} className="md:hidden space-y-5" aria-label={isEditing ? 'Editar tarjeta' : 'Crear tarjeta'}>
         <div className="space-y-3">
           <div className="flex items-center justify-between gap-3 text-xs text-slate-500 font-semibold uppercase tracking-wider">
             <span className="flex items-center gap-1.5 normal-case tracking-normal text-slate-400">
-              <Eye size={14} />
+              <Eye aria-hidden="true" size={14} />
               Selecciona una opción
             </span>
 
-            <div className="flex bg-slate-900 rounded-lg p-0.5 border border-slate-800">
+            <div className="flex bg-slate-900 rounded-lg p-0.5 border border-slate-800" role="group" aria-label="Seleccionar lado de la tarjeta">
               <button
                 type="button"
                 onClick={() => setPreviewSide('front')}
-                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${previewSide === 'front'
+                aria-pressed={previewSide === 'front'}
+                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 motion-reduce:transition-none ${previewSide === 'front'
                     ? 'bg-violet-600 text-white'
                     : 'text-slate-400 hover:text-slate-200'
                   }`}
@@ -121,7 +123,8 @@ export default function CardForm() {
               <button
                 type="button"
                 onClick={() => setPreviewSide('back')}
-                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${previewSide === 'back'
+                aria-pressed={previewSide === 'back'}
+                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 motion-reduce:transition-none ${previewSide === 'back'
                     ? 'bg-violet-600 text-white'
                     : 'text-slate-400 hover:text-slate-200'
                   }`}
@@ -131,19 +134,24 @@ export default function CardForm() {
             </div>
           </div>
 
+          <p className="sr-only" aria-live="polite">
+            Estás editando el lado de {previewSide === 'front' ? 'pregunta' : 'respuesta'}.
+          </p>
+
           <div className="mobile-form-flip-card">
             <div
-              className={`mobile-form-flip-inner ${previewSide === 'back' ? 'is-flipped' : ''
-                }`}
+              className={`mobile-form-flip-inner motion-reduce:transition-none ${previewSide === 'back' ? 'is-flipped' : ''}`}
             >
-              {/* Pregunta */}
-              <div className="mobile-form-flip-face mobile-form-flip-front relative min-h-[220px] rounded-3xl border border-slate-900 bg-slate-900/10 p-5 flex flex-col justify-between shadow-xl overflow-hidden">
-                <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-violet-600/5 blur-3xl" />
-                <div className="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-indigo-600/5 blur-3xl" />
+              <div
+                className="mobile-form-flip-face mobile-form-flip-front relative min-h-[220px] rounded-3xl border border-slate-900 bg-slate-900/10 p-5 flex flex-col justify-between shadow-xl overflow-hidden"
+                aria-hidden={previewSide !== 'front'}
+              >
+                <div aria-hidden="true" className="absolute top-0 right-0 h-40 w-40 rounded-full bg-violet-600/5 blur-3xl" />
+                <div aria-hidden="true" className="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-indigo-600/5 blur-3xl" />
 
                 <div className="flex justify-between items-center z-10">
                   <span className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                    <Tag size={10} />
+                    <Tag aria-hidden="true" size={10} />
                     {topic || 'Categoría'}
                   </span>
 
@@ -154,12 +162,14 @@ export default function CardForm() {
 
                 <div className="flex-1 flex items-center justify-center py-4 z-10">
                   <textarea
+                    aria-label="Pregunta de la tarjeta"
                     spellCheck={false}
                     required
+                    tabIndex={previewSide === 'front' ? 0 : -1}
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
                     placeholder="Escribí la pregunta..."
-                    className="mobile-card-textarea min-h-[100px] w-full resize-none rounded-2xl px-2 py-4 text-center text-base font-bold leading-relaxed text-slate-200 placeholder:text-slate-500 placeholder:italic focus:outline-none"
+                    className="mobile-card-textarea min-h-[100px] w-full resize-none rounded-2xl px-2 py-4 text-center text-base font-bold leading-relaxed text-slate-200 placeholder:text-slate-500 placeholder:italic focus:outline-none focus:ring-2 focus:ring-violet-500"
                   />
                 </div>
 
@@ -169,14 +179,16 @@ export default function CardForm() {
                 </div>
               </div>
 
-              {/* Respuesta */}
-              <div className="mobile-form-flip-face mobile-form-flip-back relative min-h-[220px] rounded-3xl border border-slate-900 bg-slate-900/10 p-5 flex flex-col justify-between shadow-xl overflow-hidden">
-                <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-violet-600/5 blur-3xl" />
-                <div className="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-indigo-600/5 blur-3xl" />
+              <div
+                className="mobile-form-flip-face mobile-form-flip-back relative min-h-[220px] rounded-3xl border border-slate-900 bg-slate-900/10 p-5 flex flex-col justify-between shadow-xl overflow-hidden"
+                aria-hidden={previewSide !== 'back'}
+              >
+                <div aria-hidden="true" className="absolute top-0 right-0 h-40 w-40 rounded-full bg-violet-600/5 blur-3xl" />
+                <div aria-hidden="true" className="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-indigo-600/5 blur-3xl" />
 
                 <div className="flex justify-between items-center z-10">
                   <span className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                    <Tag size={10} />
+                    <Tag aria-hidden="true" size={10} />
                     {topic || 'Categoría'}
                   </span>
 
@@ -187,12 +199,14 @@ export default function CardForm() {
 
                 <div className="flex-1 flex items-center justify-center py-4 z-10">
                   <textarea
+                    aria-label="Respuesta de la tarjeta"
                     spellCheck={false}
                     required
+                    tabIndex={previewSide === 'back' ? 0 : -1}
                     value={answer}
                     onChange={(e) => setAnswer(e.target.value)}
                     placeholder="Escribí la respuesta..."
-                    className="mobile-card-textarea min-h-[100px] w-full resize-none rounded-2xl px-2 py-4 text-center text-sm leading-relaxed text-slate-400 placeholder:text-slate-500 placeholder:italic focus:outline-none"
+                    className="mobile-card-textarea min-h-[100px] w-full resize-none rounded-2xl px-2 py-4 text-center text-sm leading-relaxed text-slate-400 placeholder:text-slate-500 placeholder:italic focus:outline-none focus:ring-2 focus:ring-violet-500"
                   />
                 </div>
 
@@ -205,10 +219,10 @@ export default function CardForm() {
           </div>
         </div>
 
-        <div className="space-y-2">
-          <label className="block text-sm font-bold text-slate-400">
+        <fieldset className="space-y-2">
+          <legend className="block text-sm font-bold text-slate-400">
             Dificultad
-          </label>
+          </legend>
 
           <div className="grid grid-cols-3 bg-slate-950 p-0.5 rounded-xl border border-slate-900">
             {(['easy', 'medium', 'hard'] as CardDifficulty[]).map((level) => (
@@ -216,7 +230,8 @@ export default function CardForm() {
                 key={level}
                 type="button"
                 onClick={() => setDifficulty(level)}
-                className={`py-1 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-all ${difficulty === level
+                aria-pressed={difficulty === level}
+                className={`py-1 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 motion-reduce:transition-none ${difficulty === level
                     ? level === 'easy'
                       ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
                       : level === 'medium'
@@ -229,14 +244,15 @@ export default function CardForm() {
               </button>
             ))}
           </div>
-        </div>
+        </fieldset>
 
         <div className="space-y-2">
-          <label className="block text-sm font-bold text-slate-400">
+          <label htmlFor="mobile-card-topic" className="block text-sm font-bold text-slate-400">
             Tema / Categoría
           </label>
 
           <input
+            id="mobile-card-topic"
             type="text"
             required
             value={topic}
@@ -250,28 +266,28 @@ export default function CardForm() {
           <button
             type="button"
             onClick={() => navigate('/cards')}
-            className="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-400 hover:bg-slate-900 hover:text-white transition-colors"
+            className="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-400 hover:bg-slate-900 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 motion-reduce:transition-none"
           >
             Cancelar
           </button>
 
           <button
             type="submit"
-            className="rounded-xl bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-violet-500 active:bg-violet-700 transition-all shadow-lg shadow-violet-600/25 active:scale-[0.98]"
+            className="rounded-xl bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-violet-500 active:bg-violet-700 transition-all shadow-lg shadow-violet-600/25 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 motion-reduce:transform-none motion-reduce:transition-none"
           >
             {isEditing ? 'Guardar' : 'Crear Tarjeta'}
           </button>
         </div>
       </form>
 
-      {/* Desktop layout */}
       <div className="hidden md:grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        <form onSubmit={handleSubmit} className="space-y-6 lg:col-span-7 bg-slate-900/10 border border-slate-900 p-6 md:p-8 rounded-3xl">
+        <form onSubmit={handleSubmit} className="space-y-6 lg:col-span-7 bg-slate-900/10 border border-slate-900 p-6 md:p-8 rounded-3xl" aria-label={isEditing ? 'Editar tarjeta' : 'Crear tarjeta'}>
           <div className="space-y-2">
-            <label className="block text-sm font-bold text-slate-400">
+            <label htmlFor="desktop-card-question" className="block text-sm font-bold text-slate-400">
               Anverso (Pregunta o Concepto)
             </label>
             <textarea
+              id="desktop-card-question"
               required
               rows={4}
               value={question}
@@ -282,10 +298,11 @@ export default function CardForm() {
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-bold text-slate-400">
+            <label htmlFor="desktop-card-answer" className="block text-sm font-bold text-slate-400">
               Reverso (Respuesta o Detalles)
             </label>
             <textarea
+              id="desktop-card-answer"
               required
               rows={4}
               value={answer}
@@ -297,10 +314,11 @@ export default function CardForm() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="block text-sm font-bold text-slate-400">
+              <label htmlFor="desktop-card-topic" className="block text-sm font-bold text-slate-400">
                 Tema / Categoría
               </label>
               <input
+                id="desktop-card-topic"
                 type="text"
                 required
                 value={topic}
@@ -310,10 +328,10 @@ export default function CardForm() {
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="block text-sm font-bold text-slate-400">
+            <fieldset className="space-y-2">
+              <legend className="block text-sm font-bold text-slate-400">
                 Dificultad
-              </label>
+              </legend>
 
               <div className="grid grid-cols-3 bg-slate-950 p-1 rounded-xl border border-slate-900">
                 {(['easy', 'medium', 'hard'] as CardDifficulty[]).map((level) => (
@@ -321,7 +339,8 @@ export default function CardForm() {
                     key={level}
                     type="button"
                     onClick={() => setDifficulty(level)}
-                    className={`py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${difficulty === level
+                    aria-pressed={difficulty === level}
+                    className={`py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 motion-reduce:transition-none ${difficulty === level
                         ? level === 'easy'
                           ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
                           : level === 'medium'
@@ -334,21 +353,21 @@ export default function CardForm() {
                   </button>
                 ))}
               </div>
-            </div>
+            </fieldset>
           </div>
 
           <div className="flex justify-end gap-3 border-t border-slate-900 pt-6">
             <button
               type="button"
               onClick={() => navigate('/cards')}
-              className="rounded-xl px-5 py-2.5 text-sm font-semibold text-slate-400 hover:bg-slate-900 hover:text-white transition-colors"
+              className="rounded-xl px-5 py-2.5 text-sm font-semibold text-slate-400 hover:bg-slate-900 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 motion-reduce:transition-none"
             >
               Cancelar
             </button>
 
             <button
               type="submit"
-              className="rounded-xl bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-violet-500 active:bg-violet-700 transition-all shadow-lg shadow-violet-600/25 active:scale-[0.98]"
+              className="rounded-xl bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-violet-500 active:bg-violet-700 transition-all shadow-lg shadow-violet-600/25 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 motion-reduce:transform-none motion-reduce:transition-none"
             >
               {isEditing ? 'Guardar Cambios' : 'Crear Tarjeta'}
             </button>
@@ -358,14 +377,15 @@ export default function CardForm() {
         <div className="lg:col-span-5 space-y-4">
           <div className="flex items-center justify-between text-xs text-slate-500 font-semibold uppercase tracking-wider">
             <span className="flex items-center gap-1.5">
-              <Eye size={14} /> Vista Previa de Tarjeta
+              <Eye aria-hidden="true" size={14} /> Vista Previa de Tarjeta
             </span>
 
-            <div className="flex bg-slate-900 rounded-lg p-0.5 border border-slate-800">
+            <div className="flex bg-slate-900 rounded-lg p-0.5 border border-slate-800" role="group" aria-label="Seleccionar lado de vista previa">
               <button
                 type="button"
                 onClick={() => setPreviewSide('front')}
-                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${previewSide === 'front'
+                aria-pressed={previewSide === 'front'}
+                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 motion-reduce:transition-none ${previewSide === 'front'
                     ? 'bg-violet-600 text-white'
                     : 'text-slate-400 hover:text-slate-200'
                   }`}
@@ -376,7 +396,8 @@ export default function CardForm() {
               <button
                 type="button"
                 onClick={() => setPreviewSide('back')}
-                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${previewSide === 'back'
+                aria-pressed={previewSide === 'back'}
+                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 motion-reduce:transition-none ${previewSide === 'back'
                     ? 'bg-violet-600 text-white'
                     : 'text-slate-400 hover:text-slate-200'
                   }`}
@@ -387,12 +408,12 @@ export default function CardForm() {
           </div>
 
           <div className="w-full aspect-[4/3] rounded-3xl border border-slate-900 bg-slate-900/10 p-6 flex flex-col justify-between shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-violet-600/5 blur-3xl" />
-            <div className="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-indigo-600/5 blur-3xl" />
+            <div aria-hidden="true" className="absolute top-0 right-0 h-40 w-40 rounded-full bg-violet-600/5 blur-3xl" />
+            <div aria-hidden="true" className="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-indigo-600/5 blur-3xl" />
 
             <div className="flex justify-between items-center z-10">
               <span className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                <Tag size={10} />
+                <Tag aria-hidden="true" size={10} />
                 {topic || 'Categoría'}
               </span>
 
@@ -401,13 +422,13 @@ export default function CardForm() {
               </span>
             </div>
 
-            <div className="flex-1 flex items-center justify-center py-4 text-center z-10">
+            <div className="flex-1 flex items-center justify-center py-4 text-center z-10" aria-live="polite">
               {previewSide === 'front' ? (
-                <p className={`text-base font-bold leading-relaxed transition-all ${question ? 'text-slate-200' : 'text-slate-600 italic'}`}>
+                <p className={`text-base font-bold leading-relaxed transition-all motion-reduce:transition-none ${question ? 'text-slate-200' : 'text-slate-600 italic'}`}>
                   {question || 'Escribe la pregunta en el formulario para previsualizar...'}
                 </p>
               ) : (
-                <p className={`text-sm leading-relaxed transition-all ${answer ? 'text-slate-400' : 'text-slate-600 italic'}`}>
+                <p className={`text-sm leading-relaxed transition-all motion-reduce:transition-none ${answer ? 'text-slate-400' : 'text-slate-600 italic'}`}>
                   {answer || 'Escribe la respuesta en el formulario para previsualizar...'}
                 </p>
               )}
