@@ -6,6 +6,7 @@ interface StudyLayoutProps {
   children: ReactNode;
   title: string;
   subtitle?: string;
+  mobileSubtitle?: React.ReactNode;
   variant?: 'selector' | 'session' | 'finished';
   backLabel?: string;
   onBack?: () => void;
@@ -15,6 +16,7 @@ export default function StudyLayout({
   children,
   title,
   subtitle,
+  mobileSubtitle,
   variant = 'session',
   backLabel = 'Volver al inicio',
   onBack,
@@ -27,6 +29,7 @@ export default function StudyLayout({
         <PageHeader
           title={title}
           subtitle={subtitle}
+          mobileSubtitle={mobileSubtitle}
           backTo="/"
           backLabel={backLabel}
         />

@@ -79,13 +79,14 @@ export default function CardForm() {
     <PageShell size="default">
       {/* Navigation Header */}
       <PageHeader
-        title={isEditing ? 'Editar Tarjeta de Estudio' : 'Crear Nueva Tarjeta'}
+        title={isEditing ? 'Editar Tarjeta' : 'Crear Nueva Tarjeta'}
         subtitle={
           isEditing
             ? 'Actualiza los campos de tu tarjeta para modificar tu mazo.'
             : 'Define una pregunta y una respuesta para guardar en tu biblioteca.'
         }
         backTo="/cards"
+        mobileSubtitle={null}
         backLabel="Volver al listado"
       />
 

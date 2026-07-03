@@ -102,6 +102,7 @@ export default function QuizPage() {
         title="Modo Quiz"
         variant="selector"
         subtitle="Elegí un mazo para poner a prueba tus conocimientos."
+        mobileSubtitle="Elegí un mazo para comenzar."
       >
         <DeckSelector
           decks={deckOptions}

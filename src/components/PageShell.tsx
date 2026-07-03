@@ -17,7 +17,7 @@ export default function PageShell({
 
   return (
     <div
-      className={`mx-auto w-full ${maxWidth} px-6 py-10 flex flex-col space-y-8`}
+      className={`mx-auto w-full ${maxWidth} px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10 flex flex-col space-y-8`}
     >
       {children}
     </div>
