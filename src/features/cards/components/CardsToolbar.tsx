@@ -47,7 +47,11 @@ export default function CardsToolbar({
   };
 
   return (
-    <div className="flex items-center justify-between gap-3 bg-slate-900/10 border border-slate-900/40 p-4 rounded-2xl shrink-0">
+    <div
+      className="flex items-center justify-between gap-3 bg-slate-900/10 border border-slate-900/40 p-4 rounded-2xl shrink-0"
+      role="toolbar"
+      aria-label="Herramientas de búsqueda y filtros"
+    >
       {/* Mobile search */}
       <div
         ref={searchRef}
@@ -58,14 +62,17 @@ export default function CardsToolbar({
         <button
           type="button"
           onClick={() => setIsSearchOpen((prev) => !prev)}
-          aria-label="Abrir búsqueda"
-          className="flex items-center justify-center"
+          aria-label={isSearchOpen ? "Cerrar búsqueda" : "Abrir búsqueda"}
+          aria-expanded={isSearchOpen}
+          aria-controls="mobile-search-input"
+          className="flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-violet-500 rounded-md"
         >
-          <Search size={17} />
+          <Search size={17} aria-hidden="true" />
         </button>
 
         {isSearchOpen && (
           <input
+            id="mobile-search-input"
             autoFocus
             type="text"
             value={searchTerm}
@@ -78,11 +85,15 @@ export default function CardsToolbar({
 
       {/* Desktop search */}
       <div className="relative hidden sm:block flex-1 max-w-md">
+        <label htmlFor="desktop-search-input" className="sr-only">
+          Buscar por pregunta o respuesta
+        </label>
         <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
-          <Search size={15} />
+          <Search size={15} aria-hidden="true" />
         </span>
 
         <input
+          id="desktop-search-input"
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -93,12 +104,16 @@ export default function CardsToolbar({
 
       {/* Desktop filter */}
       <div className="hidden sm:flex items-center gap-3">
-        <span className="text-slate-500 text-xs font-semibold flex items-center gap-1.5 shrink-0">
-          <SlidersHorizontal size={14} />
+        <span
+          className="text-slate-500 text-xs font-semibold flex items-center gap-1.5 shrink-0"
+          id="desktop-filter-label"
+        >
+          <SlidersHorizontal size={14} aria-hidden="true" />
           Filtrar:
         </span>
 
         <select
+          aria-labelledby="desktop-filter-label"
           value={selectedTopic}
           onChange={(e) => setSelectedTopic(e.target.value)}
           className="rounded-xl border border-slate-900 bg-slate-950 text-xs sm:text-sm text-slate-400 px-4 py-2.5 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-all font-semibold"
@@ -119,11 +134,12 @@ export default function CardsToolbar({
           onClick={() => setIsFilterOpen((prev) => !prev)}
           aria-label="Abrir filtros"
           aria-expanded={isFilterOpen}
-          className={`flex h-11 items-center justify-center rounded-xl border border-slate-800 bg-slate-950 text-xs font-semibold text-slate-300 transition-all hover:border-violet-500/40 ${
+          aria-controls="mobile-filter-menu"
+          className={`flex h-11 items-center justify-center rounded-xl border border-slate-800 bg-slate-950 text-xs font-semibold text-slate-300 transition-all hover:border-violet-500/40 focus:outline-none focus:ring-2 focus:ring-violet-500 ${
             isSearchOpen ? 'w-11' : 'w-28 gap-2 px-4'
           }`}
         >
-          <SlidersHorizontal size={15} />
+          <SlidersHorizontal size={15} aria-hidden="true" />
 
           {!isSearchOpen && (
             <>
@@ -131,17 +147,24 @@ export default function CardsToolbar({
               <ChevronDown
                 size={15}
                 className={`transition-transform ${isFilterOpen ? 'rotate-180' : ''}`}
+                aria-hidden="true"
               />
             </>
           )}
         </button>
 
         {isFilterOpen && (
-          <div className="absolute right-0 top-full z-40 mt-2 w-44 overflow-hidden rounded-xl border border-slate-800 bg-slate-950 shadow-xl shadow-slate-950/40">
+          <div
+            id="mobile-filter-menu"
+            role="menu"
+            aria-label="Opciones de filtro"
+            className="absolute right-0 top-full z-40 mt-2 w-44 overflow-hidden rounded-xl border border-slate-800 bg-slate-950 shadow-xl shadow-slate-950/40"
+          >
             <button
               type="button"
+              role="menuitem"
               onClick={() => handleSelectTopic('all')}
-              className={`block w-full px-4 py-2.5 text-left text-xs font-semibold transition-colors ${
+              className={`block w-full px-4 py-2.5 text-left text-xs font-semibold transition-colors focus:outline-none focus:bg-violet-600/20 ${
                 selectedTopic === 'all'
                   ? 'bg-violet-600/10 text-violet-400'
                   : 'text-slate-300 hover:bg-slate-900'
@@ -154,11 +177,12 @@ export default function CardsToolbar({
               <button
                 key={topic}
                 type="button"
+                role="menuitem"
                 onClick={() => handleSelectTopic(topic)}
-                className={`block w-full px-4 py-2.5 text-left text-xs font-semibold transition-colors ${
+                className={`block w-full px-4 py-2.5 text-left text-xs font-semibold transition-colors focus:outline-none focus:bg-violet-600/20 ${
                   selectedTopic === topic
                     ? 'bg-violet-600/10 text-violet-400'
-                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-900'
+                    : 'text-slate-300 hover:bg-slate-900'
                 }`}
               >
                 {topic}
