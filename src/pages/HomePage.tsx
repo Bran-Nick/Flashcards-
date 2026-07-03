@@ -35,8 +35,6 @@ export default function HomePage() {
 
   return (
     <div className="w-full sm:max-w-6xl mx-auto py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
-
-      {/* Sección de Bienvenida */}
       <div className="text-center mb-8 sm:mb-12">
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
           ¡Bienvenido!
@@ -46,9 +44,7 @@ export default function HomePage() {
         </p>
       </div>
 
-      {/* Grilla de Tarjetas / Modos */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-6 mb-8 sm:mb-12">
-
         {homeCards.map((card) => {
           const Icon = card.icon;
 
@@ -56,12 +52,13 @@ export default function HomePage() {
             <Link
               key={card.to}
               to={card.to}
-              className="relative group bg-slate-900/40 border-2 border-slate-900 hover:border-violet-500/30 rounded-2xl p-4 sm:p-6 flex flex-col justify-center md:justify-between min-h-[140px] sm:min-h-[180px] md:min-h-[250px] transition-all hover:shadow-lg hover:shadow-violet-600/5 hover:-translate-y-0.5"
+              aria-label={`${card.title}: ${card.description}`}
+              className="relative group bg-slate-900/40 border-2 border-slate-900 hover:border-violet-500/30 rounded-2xl p-4 sm:p-6 flex flex-col justify-center md:justify-between min-h-[140px] sm:min-h-[180px] md:min-h-[250px] transition-all hover:shadow-lg hover:shadow-violet-600/5 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 motion-reduce:transform-none motion-reduce:transition-none"
             >
               <div className="flex flex-col items-center text-center md:mt-4">
-                <div className="p-2.5 sm:p-3 bg-violet-600/10 rounded-xl text-violet-400 mb-3 sm:mb-4 group-hover:scale-105 transition-transform">
-                  <Icon size={28} className="sm:hidden" />
-                  <Icon size={32} className="hidden sm:block" />
+                <div className="p-2.5 sm:p-3 bg-violet-600/10 rounded-xl text-violet-400 mb-3 sm:mb-4 group-hover:scale-105 transition-transform motion-reduce:transform-none motion-reduce:transition-none">
+                  <Icon aria-hidden="true" size={28} className="sm:hidden" />
+                  <Icon aria-hidden="true" size={32} className="hidden sm:block" />
                 </div>
 
                 <h3 className="text-sm sm:text-lg font-bold text-white md:mb-2">
@@ -74,8 +71,8 @@ export default function HomePage() {
               </div>
 
               <div className="hidden md:flex justify-end mt-4">
-                <div className="p-2 bg-slate-800 text-slate-300 rounded-full group-hover:bg-violet-600 group-hover:text-white transition-colors">
-                  <ArrowRight size={16} />
+                <div className="p-2 bg-slate-800 text-slate-300 rounded-full group-hover:bg-violet-600 group-hover:text-white transition-colors motion-reduce:transition-none">
+                  <ArrowRight aria-hidden="true" size={16} />
                 </div>
               </div>
             </Link>
@@ -83,7 +80,6 @@ export default function HomePage() {
         })}
       </div>
 
-      {/* Sección Inferior: Mini Dashboard de Progreso General */}
       <HomeSummary />
     </div>
   );

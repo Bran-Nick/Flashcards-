@@ -33,9 +33,9 @@ export default function PageHeader({
             <Link
               to={backTo}
               aria-label={backLabel}
-              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white/70 text-slate-600 shadow-sm transition-colors hover:border-violet-300 hover:text-violet-500 dark:border-slate-800 dark:bg-slate-950/40 dark:text-slate-300 dark:hover:text-violet-400 md:hidden"
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white/70 text-slate-600 shadow-sm transition-colors hover:border-violet-300 hover:text-violet-500 dark:border-slate-800 dark:bg-slate-950/40 dark:text-slate-300 dark:hover:text-violet-400 md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950"
             >
-              <ArrowLeft size={18} />
+              <ArrowLeft aria-hidden="true" size={18} />
             </Link>
           )}
 
@@ -71,9 +71,9 @@ export default function PageHeader({
         {backTo && (
           <Link
             to={backTo}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 transition-colors hover:text-violet-400"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 transition-colors hover:text-violet-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded-lg"
           >
-            <ArrowLeft size={16} />
+            <ArrowLeft aria-hidden="true" size={16} />
             {backLabel}
           </Link>
         )}
