@@ -1,13 +1,10 @@
+/* Deck selector cards */
 .deck-card {
   position: relative;
-  min-height: 120px;
+  min-height: 110px;
   z-index: 1;
   width: 100%;
   cursor: pointer;
-}
-
-.deck-card:hover {
-  z-index: 20;
 }
 
 .deck-card::before,
@@ -42,6 +39,7 @@
     0 10px 24px rgba(139, 92, 246, 0.08);
 }
 
+/* Estado base del mazo */
 .deck-card::before {
   transform: translate(6px, -4px);
 }
@@ -50,21 +48,48 @@
   transform: translate(6px, 4px);
 }
 
-.deck-card:hover .deck-card-front {
-  border-color: rgb(139 92 246);
-  box-shadow:
-    0 0 0 1px rgba(139, 92, 246, 0.25),
-    0 12px 30px rgba(139, 92, 246, 0.15);
+/* Mobile: se presiona como botón, no se abre el mazo */
+@media (max-width: 639px) {
+  .deck-card:active .deck-card-front {
+    transform: translate(2px, 2px) scale(0.98);
+  }
+
+  .deck-card:active::before {
+    transform: translate(8px, -2px) scale(0.98);
+  }
+
+  .deck-card:active::after {
+    transform: translate(8px, 6px) scale(0.98);
+  }
 }
 
-.deck-card:hover::before {
-  transform: translate(16px, -12px) rotate(-6deg);
+/* Desktop/tablet: hover con efecto de mazo abierto */
+@media (min-width: 640px) {
+  .deck-card {
+    min-height: 120px;
+  }
+
+  .deck-card:hover {
+    z-index: 20;
+  }
+
+  .deck-card:hover .deck-card-front {
+    border-color: rgb(139 92 246);
+    box-shadow:
+      0 0 0 1px rgba(139, 92, 246, 0.25),
+      0 12px 30px rgba(139, 92, 246, 0.15);
+  }
+
+  .deck-card:hover::before {
+    transform: translate(16px, -12px) rotate(-6deg);
+  }
+
+  .deck-card:hover::after {
+    transform: translate(16px, 12px) rotate(6deg);
+  }
 }
 
-.deck-card:hover::after {
-  transform: translate(16px, 12px) rotate(6deg);
-}
-
+/* Dark mode */
 .dark .deck-card::before,
 .dark .deck-card::after {
   border-color: #334155;
@@ -239,5 +264,37 @@
 @keyframes reveal-button-fill {
   to {
     transform: translateX(0);
+  }
+}
+
+@media (min-width: 640px) {
+  .deck-card {
+    min-height: 120px;
+  }
+  .deck-card:hover {
+    z-index: 20;
+  }
+
+  .deck-card:hover .deck-card-front {
+    border-color: rgb(139 92 246);
+    box-shadow:
+      0 0 0 1px rgba(139, 92, 246, 0.25),
+      0 12px 30px rgba(139, 92, 246, 0.15);
+  }
+
+  .deck-card:hover::before {
+    transform: translate(16px, -12px) rotate(-6deg);
+  }
+
+  .deck-card:hover::after {
+    transform: translate(16px, 12px) rotate(6deg);
+  }
+}
+
+@media (max-width: 639px) {
+  .deck-card:active .deck-card-front,
+  .deck-card:active::before,
+  .deck-card:active::after {
+    transform: translate(2px, 2px) scale(0.98);
   }
 }
