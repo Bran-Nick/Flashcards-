@@ -10,6 +10,7 @@ interface PageHeaderProps {
   backLabel?: string;
   actions?: ReactNode;
   showDivider?: boolean;
+  variant?: 'selector' | 'session' | 'finished';
 }
 
 export default function PageHeader({
@@ -20,6 +21,7 @@ export default function PageHeader({
   backLabel = 'Volver al inicio',
   actions,
   showDivider = true,
+  variant,
 
 }: PageHeaderProps) {
   return (
@@ -39,9 +41,15 @@ export default function PageHeader({
             </Link>
           )}
 
-          <h1 className="min-w-0 flex-1 text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+          <h1
+            className={`min-w-0 flex-1 font-extrabold tracking-tight text-white
+    ${variant === 'session'
+                ? 'text-[1.35rem] sm:text-3xl'
+                : 'text-2xl sm:text-3xl'}`}
+          >
             {title}
           </h1>
+
 
           {actions && (
             <div className="flex shrink-0 items-center gap-2 md:hidden">
@@ -50,21 +58,21 @@ export default function PageHeader({
           )}
         </div>
 
-       {subtitle && (
-  <>
-    {/* Mobile */}
-    {mobileSubtitle !== null && (
-      <div className="mt-3 text-sm text-slate-400 md:hidden">
-        {mobileSubtitle ?? subtitle}
-      </div>
-    )}
+        {subtitle && (
+          <>
+            {/* Mobile */}
+            {mobileSubtitle !== null && (
+              <div className="mt-3 text-sm text-slate-400 md:hidden">
+                {mobileSubtitle ?? subtitle}
+              </div>
+            )}
 
-    {/* Desktop */}
-    <div className="hidden md:block mt-3 text-base text-slate-400">
-      {subtitle}
-    </div>
-  </>
-)}
+            {/* Desktop */}
+            <div className="hidden md:block mt-3 text-base text-slate-400">
+              {subtitle}
+            </div>
+          </>
+        )}
       </div>
 
       <div className="hidden shrink-0 flex-col items-start gap-4 md:flex md:items-end">

@@ -52,7 +52,14 @@ export default function QuizSession({
             </p>
           </div>
 
-          <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800 max-sm:h-1.5">
+          <div
+            role="progressbar"
+            aria-valuenow={currentIndex + (showAnswer ? 1 : 0)}
+            aria-valuemin={0}
+            aria-valuemax={totalCards}
+            aria-label={`Progreso: ${Math.round(progress)}% completado`}
+            className="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800 max-sm:h-1.5"
+          >
             <div
               className="h-full rounded-full bg-violet-500 transition-all duration-300"
               style={{ width: `${progress}%` }}
@@ -62,6 +69,7 @@ export default function QuizSession({
 
         <div
           key={currentCard.id}
+          aria-live="polite"
           className="review-flip-card relative mt-12 study-card-enter max-sm:mt-6"
         >
           <div className="study-card-deck max-sm:hidden" aria-hidden="true">
@@ -105,6 +113,7 @@ export default function QuizSession({
               <button
                 onClick={onShowAnswer}
                 disabled={!canRevealAnswer}
+                aria-label={canRevealAnswer ? "Mostrar respuesta" : "Esperá unos segundos para ver la respuesta"}
                 className={`
                   reveal-button
                   rounded-xl
@@ -129,6 +138,7 @@ export default function QuizSession({
               <div className="flex items-center justify-between gap-3 max-sm:gap-2">
                 <button
                   onClick={onShowAnswer}
+                  aria-label="Volver a ver la pregunta"
                   className="text-sm text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-300 max-sm:text-xs max-sm:font-semibold"
                 >
                   Recordar pregunta

@@ -37,7 +37,6 @@ export default function ReviewSession({
           <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
             Mazo actual
           </p>
-
           <p className="mt-1 text-base font-semibold text-slate-950 dark:text-white">
             {selectedTopic === 'all' ? 'Todas las tarjetas' : selectedTopic}
           </p>
@@ -50,13 +49,19 @@ export default function ReviewSession({
             <p className="text-sm text-slate-600 dark:text-slate-400 max-sm:text-xs">
               Tarjeta {currentIndex + 1} de {totalCards}
             </p>
-
             <p className="text-sm font-semibold text-violet-600 dark:text-violet-300 max-sm:text-xs">
               {Math.round(progress)}%
             </p>
           </div>
 
-          <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800 max-sm:h-1.5">
+          <div
+            role="progressbar"
+            aria-valuenow={currentIndex + (showAnswer ? 1 : 0)}
+            aria-valuemin={0}
+            aria-valuemax={totalCards}
+            aria-label={`Progreso: ${Math.round(progress)}% completado`}
+            className="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800 max-sm:h-1.5"
+          >
             <div
               className="h-full rounded-full bg-violet-500 transition-all duration-300"
               style={{ width: `${progress}%` }}
@@ -66,6 +71,7 @@ export default function ReviewSession({
 
         <div
           key={currentCard.id}
+          aria-live="polite"
           className={`review-flip-card relative mt-12 max-sm:mt-6 ${
             direction === 'prev' ? 'study-card-enter-prev' : 'study-card-enter-next'
           }`}
@@ -96,7 +102,6 @@ export default function ReviewSession({
                 <p className="mb-4 text-sm font-bold uppercase tracking-wider text-violet-500 dark:text-violet-300 max-sm:mb-2 max-sm:text-[10px]">
                   Respuesta
                 </p>
-
                 <p className="text-lg leading-relaxed text-slate-700 dark:text-slate-200 max-sm:text-sm">
                   {currentCard.answer}
                 </p>
@@ -110,6 +115,7 @@ export default function ReviewSession({
             <button
               onClick={onPreviousCard}
               disabled={currentIndex === 0}
+              aria-label="Ir a la tarjeta anterior"
               className="rounded-xl border border-slate-300 px-4 py-2 text-slate-700 transition-colors hover:border-violet-400 hover:text-violet-600 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-300 dark:hover:text-violet-300 max-sm:w-full max-sm:px-2 max-sm:py-2 max-sm:text-xs max-sm:font-semibold"
             >
               Anterior
@@ -119,6 +125,7 @@ export default function ReviewSession({
           <div className="flex justify-center pb-4 max-sm:pb-0">
             <button
               onClick={onShowAnswer}
+              aria-label={showAnswer ? "Ocultar respuesta y ver pregunta" : "Mostrar respuesta"}
               className="rounded-xl bg-violet-600 px-6 py-3 font-semibold !text-white transition-colors hover:bg-violet-500 max-sm:w-full max-sm:px-2 max-sm:py-2.5 max-sm:text-xs"
             >
               <span className="max-sm:hidden">
@@ -133,6 +140,7 @@ export default function ReviewSession({
           <div className="flex justify-end">
             <button
               onClick={onNextCard}
+              aria-label={isReadyToFinish ? "Finalizar sesión de repaso" : "Ir a la siguiente tarjeta"}
               className={
                 isReadyToFinish
                   ? 'rounded-xl bg-emerald-500 px-7 py-3 font-semibold !text-white shadow-lg shadow-emerald-500/30 transition-all hover:-translate-y-0.5 hover:bg-emerald-400 max-sm:w-full max-sm:px-2 max-sm:py-2.5 max-sm:text-xs'
@@ -155,7 +163,6 @@ export default function ReviewSession({
           <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 max-sm:text-[10px]">
             Mazo actual
           </p>
-
           <p className="text-base font-semibold text-slate-950 dark:text-white max-sm:text-sm">
             {selectedTopic === 'all' ? 'Todas las tarjetas' : selectedTopic}
           </p>
@@ -163,6 +170,7 @@ export default function ReviewSession({
 
         <button
           onClick={onChangeDeck}
+          aria-label="Cambiar mazo actual"
           className="text-sm text-slate-600 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-300 max-sm:text-xs max-sm:font-semibold"
         >
           Cambiar mazo
