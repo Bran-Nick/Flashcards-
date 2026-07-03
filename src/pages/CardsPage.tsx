@@ -1,17 +1,21 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Plus, Search, RotateCcw, BookOpen, SlidersHorizontal
-} from 'lucide-react';
+import { Plus, RotateCcw, BookOpen } from 'lucide-react';
 import { useCardStore } from '../features/cards/store';
 import CardList from '../features/cards/components/CardList';
+import CardsToolbar from '../features/cards/components/CardsToolbar';
 import { usePageTitle } from "../hooks/usePageTitle";
 import PageHeader from '../components/PageHeader';
 import PageShell from '../components/PageShell';
 
+const normalizeText = (text: string) =>
+  text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+
 export default function CardsPage() {
   usePageTitle("Mis Tarjetas");
-
   const cards = useCardStore((state) => state.cards);
   const deleteCard = useCardStore((state) => state.deleteCard);
   const resetCards = useCardStore((state) => state.resetCards);
@@ -20,20 +24,21 @@ export default function CardsPage() {
   const [selectedTopic, setSelectedTopic] = useState('all');
 
   const safeCards = cards || [];
-
-  // Dynamically extract all unique topics/tags from cards list
   const topics = Array.from(new Set(safeCards.map((c) => c.topic))).filter(Boolean);
 
-  // Filter cards based on search query and category
+  const normalizedSearch = normalizeText(searchTerm);
+
   const filteredCards = safeCards.filter((card) => {
+    const normalizedQuestion = normalizeText(card.question);
+    const normalizedAnswer = normalizeText(card.answer);
     const matchesSearch =
-      card.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      card.answer.toLowerCase().includes(searchTerm.toLowerCase());
+      normalizedQuestion.includes(normalizedSearch) ||
+      normalizedAnswer.includes(normalizedSearch);
+
     const matchesTopic = selectedTopic === 'all' || card.topic === selectedTopic;
     return matchesSearch && matchesTopic;
   });
 
-  // Calculate statistics
   const totalCards = safeCards.length;
 
   const handleDeleteCard = (id: string) => {
@@ -94,44 +99,14 @@ export default function CardsPage() {
           }
         />
 
-        {/* Filters and Controls */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-slate-900/10 border border-slate-900/40 p-4 rounded-2xl shrink-0">
-          {/* Search Input */}
-          <div className="relative flex-1 max-w-md">
-            <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
-              <Search size={15} />
-            </span>
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Buscar por pregunta o respuesta..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-900 bg-slate-950 text-xs sm:text-sm text-slate-200 placeholder-slate-500 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-all font-medium"
-            />
-          </div>
+        <CardsToolbar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          selectedTopic={selectedTopic}
+          setSelectedTopic={setSelectedTopic}
+          topics={topics}
+        />
 
-          {/* Filter Dropdown */}
-          <div className="flex items-center gap-3">
-            <span className="text-slate-500 text-xs font-semibold flex items-center gap-1.5 shrink-0">
-              <SlidersHorizontal size={14} />
-              Filtrar:
-            </span>
-            <select
-              value={selectedTopic}
-              onChange={(e) => setSelectedTopic(e.target.value)}
-              className="rounded-xl border border-slate-900 bg-slate-950 text-xs sm:text-sm text-slate-400 px-4 py-2.5 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-all font-semibold"
-            >
-              <option value="all">Todos los temas</option>
-              {topics.map((topic) => (
-                <option key={topic} value={topic}>
-                  {topic}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Cards List Display Grid */}
         <CardList
           filteredCards={filteredCards}
           onDelete={handleDeleteCard}
