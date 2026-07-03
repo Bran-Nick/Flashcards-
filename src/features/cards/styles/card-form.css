@@ -1,0 +1,49 @@
+html.light textarea.mobile-card-textarea,
+textarea.mobile-card-textarea {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.mobile-form-flip-card {
+  perspective: 1200px;
+  min-height: 220px;
+}
+
+.mobile-form-flip-inner {
+  position: relative;
+  min-height: 220px;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mobile-form-flip-inner.is-flipped {
+  transform: rotateY(-180deg);
+}
+
+.mobile-form-flip-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.5rem;
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+
+  pointer-events: none;
+}
+
+.mobile-form-flip-front {
+  pointer-events: auto;
+}
+
+.mobile-form-flip-inner.is-flipped .mobile-form-flip-front {
+  pointer-events: none;
+}
+
+.mobile-form-flip-inner.is-flipped .mobile-form-flip-back {
+  pointer-events: auto;
+}
+
+.mobile-form-flip-back {
+  transform: rotateY(-180deg);
+}

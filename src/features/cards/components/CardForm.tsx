@@ -6,6 +6,7 @@ import type { CardDifficulty } from '../types';
 import { usePageTitle } from '../../../hooks/usePageTitle';
 import PageHeader from '../../../components/PageHeader';
 import PageShell from '../../../components/PageShell';
+import '../styles/card-form.css';
 
 export default function CardForm() {
   const { id } = useParams<{ id: string }>();
@@ -75,6 +76,12 @@ export default function CardForm() {
     hard: 'text-rose-400 border-rose-500/30 bg-rose-500/5',
   };
 
+  const difficultyLabels = {
+    easy: 'Fácil',
+    medium: 'Medio',
+    hard: 'Difícil',
+  };
+
   return (
     <PageShell size="default">
       {/* Navigation Header */}
@@ -90,11 +97,176 @@ export default function CardForm() {
         backLabel="Volver al listado"
       />
 
-      {/* Form + Preview Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Form Column */}
+      {/* Mobile layout */}
+      <form onSubmit={handleSubmit} className="md:hidden space-y-5">
+        <div className="space-y-3">
+          <div className="flex items-center justify-between gap-3 text-xs text-slate-500 font-semibold uppercase tracking-wider">
+            <span className="flex items-center gap-1.5 normal-case tracking-normal text-slate-400">
+              <Eye size={14} />
+              Selecciona una opción
+            </span>
+
+            <div className="flex bg-slate-900 rounded-lg p-0.5 border border-slate-800">
+              <button
+                type="button"
+                onClick={() => setPreviewSide('front')}
+                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${previewSide === 'front'
+                    ? 'bg-violet-600 text-white'
+                    : 'text-slate-400 hover:text-slate-200'
+                  }`}
+              >
+                Pregunta
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setPreviewSide('back')}
+                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${previewSide === 'back'
+                    ? 'bg-violet-600 text-white'
+                    : 'text-slate-400 hover:text-slate-200'
+                  }`}
+              >
+                Respuesta
+              </button>
+            </div>
+          </div>
+
+          <div className="mobile-form-flip-card">
+            <div
+              className={`mobile-form-flip-inner ${previewSide === 'back' ? 'is-flipped' : ''
+                }`}
+            >
+              {/* Pregunta */}
+              <div className="mobile-form-flip-face mobile-form-flip-front relative min-h-[220px] rounded-3xl border border-slate-900 bg-slate-900/10 p-5 flex flex-col justify-between shadow-xl overflow-hidden">
+                <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-violet-600/5 blur-3xl" />
+                <div className="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-indigo-600/5 blur-3xl" />
+
+                <div className="flex justify-between items-center z-10">
+                  <span className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                    <Tag size={10} />
+                    {topic || 'Categoría'}
+                  </span>
+
+                  <span className={`text-[9px] font-black border rounded px-1.5 py-0.5 uppercase tracking-wider ${difficultyColors[difficulty]}`}>
+                    {difficultyLabels[difficulty]}
+                  </span>
+                </div>
+
+                <div className="flex-1 flex items-center justify-center py-4 z-10">
+                  <textarea
+                    spellCheck={false}
+                    required
+                    value={question}
+                    onChange={(e) => setQuestion(e.target.value)}
+                    placeholder="Escribí la pregunta..."
+                    className="mobile-card-textarea min-h-[100px] w-full resize-none rounded-2xl px-2 py-4 text-center text-base font-bold leading-relaxed text-slate-200 placeholder:text-slate-500 placeholder:italic focus:outline-none"
+                  />
+                </div>
+
+                <div className="flex justify-between items-center text-[9px] text-slate-600 font-mono border-t border-slate-900/40 pt-3 z-10">
+                  <span>{isEditing ? `ID: ${card?.id.split('-').pop()}` : 'Tarjeta Nueva'}</span>
+                  <span>Pregunta</span>
+                </div>
+              </div>
+
+              {/* Respuesta */}
+              <div className="mobile-form-flip-face mobile-form-flip-back relative min-h-[220px] rounded-3xl border border-slate-900 bg-slate-900/10 p-5 flex flex-col justify-between shadow-xl overflow-hidden">
+                <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-violet-600/5 blur-3xl" />
+                <div className="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-indigo-600/5 blur-3xl" />
+
+                <div className="flex justify-between items-center z-10">
+                  <span className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                    <Tag size={10} />
+                    {topic || 'Categoría'}
+                  </span>
+
+                  <span className={`text-[9px] font-black border rounded px-1.5 py-0.5 uppercase tracking-wider ${difficultyColors[difficulty]}`}>
+                    {difficultyLabels[difficulty]}
+                  </span>
+                </div>
+
+                <div className="flex-1 flex items-center justify-center py-4 z-10">
+                  <textarea
+                    spellCheck={false}
+                    required
+                    value={answer}
+                    onChange={(e) => setAnswer(e.target.value)}
+                    placeholder="Escribí la respuesta..."
+                    className="mobile-card-textarea min-h-[100px] w-full resize-none rounded-2xl px-2 py-4 text-center text-sm leading-relaxed text-slate-400 placeholder:text-slate-500 placeholder:italic focus:outline-none"
+                  />
+                </div>
+
+                <div className="flex justify-between items-center text-[9px] text-slate-600 font-mono border-t border-slate-900/40 pt-3 z-10">
+                  <span>{isEditing ? `ID: ${card?.id.split('-').pop()}` : 'Tarjeta Nueva'}</span>
+                  <span>Respuesta</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-bold text-slate-400">
+            Dificultad
+          </label>
+
+          <div className="grid grid-cols-3 bg-slate-950 p-0.5 rounded-xl border border-slate-900">
+            {(['easy', 'medium', 'hard'] as CardDifficulty[]).map((level) => (
+              <button
+                key={level}
+                type="button"
+                onClick={() => setDifficulty(level)}
+                className={`py-1 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-all ${difficulty === level
+                    ? level === 'easy'
+                      ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                      : level === 'medium'
+                        ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                        : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+                    : 'text-slate-500 hover:text-slate-300'
+                  }`}
+              >
+                {difficultyLabels[level]}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-bold text-slate-400">
+            Tema / Categoría
+          </label>
+
+          <input
+            type="text"
+            required
+            value={topic}
+            onChange={(e) => setTopic(e.target.value)}
+            placeholder="Ej: Programación, Hardware, Redes"
+            className="w-full rounded-xl border border-slate-900 bg-slate-950 px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-all font-medium"
+          />
+        </div>
+
+        <div className="flex justify-end gap-3 border-t border-slate-900 pt-5">
+          <button
+            type="button"
+            onClick={() => navigate('/cards')}
+            className="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-400 hover:bg-slate-900 hover:text-white transition-colors"
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="submit"
+            className="rounded-xl bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-violet-500 active:bg-violet-700 transition-all shadow-lg shadow-violet-600/25 active:scale-[0.98]"
+          >
+            {isEditing ? 'Guardar' : 'Crear Tarjeta'}
+          </button>
+        </div>
+      </form>
+
+      {/* Desktop layout */}
+      <div className="hidden md:grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         <form onSubmit={handleSubmit} className="space-y-6 lg:col-span-7 bg-slate-900/10 border border-slate-900 p-6 md:p-8 rounded-3xl">
-          {/* Question text */}
           <div className="space-y-2">
             <label className="block text-sm font-bold text-slate-400">
               Anverso (Pregunta o Concepto)
@@ -109,7 +281,6 @@ export default function CardForm() {
             />
           </div>
 
-          {/* Answer text */}
           <div className="space-y-2">
             <label className="block text-sm font-bold text-slate-400">
               Reverso (Respuesta o Detalles)
@@ -124,7 +295,6 @@ export default function CardForm() {
             />
           </div>
 
-          {/* Category/Topic Input */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label className="block text-sm font-bold text-slate-400">
@@ -140,11 +310,11 @@ export default function CardForm() {
               />
             </div>
 
-            {/* Difficulty selection */}
             <div className="space-y-2">
               <label className="block text-sm font-bold text-slate-400">
                 Dificultad
               </label>
+
               <div className="grid grid-cols-3 bg-slate-950 p-1 rounded-xl border border-slate-900">
                 {(['easy', 'medium', 'hard'] as CardDifficulty[]).map((level) => (
                   <button
@@ -160,22 +330,22 @@ export default function CardForm() {
                         : 'text-slate-500 hover:text-slate-300'
                       }`}
                   >
-                    {level === 'easy' ? 'Fácil' : level === 'medium' ? 'Medio' : 'Difícil'}
+                    {difficultyLabels[level]}
                   </button>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Action buttons */}
           <div className="flex justify-end gap-3 border-t border-slate-900 pt-6">
             <button
               type="button"
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/cards')}
               className="rounded-xl px-5 py-2.5 text-sm font-semibold text-slate-400 hover:bg-slate-900 hover:text-white transition-colors"
             >
               Cancelar
             </button>
+
             <button
               type="submit"
               className="rounded-xl bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-violet-500 active:bg-violet-700 transition-all shadow-lg shadow-violet-600/25 active:scale-[0.98]"
@@ -185,33 +355,38 @@ export default function CardForm() {
           </div>
         </form>
 
-        {/* Live Preview Column */}
         <div className="lg:col-span-5 space-y-4">
           <div className="flex items-center justify-between text-xs text-slate-500 font-semibold uppercase tracking-wider">
-            <span className="flex items-center gap-1.5"><Eye size={14} /> Vista Previa de Tarjeta</span>
+            <span className="flex items-center gap-1.5">
+              <Eye size={14} /> Vista Previa de Tarjeta
+            </span>
+
             <div className="flex bg-slate-900 rounded-lg p-0.5 border border-slate-800">
               <button
                 type="button"
                 onClick={() => setPreviewSide('front')}
-                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${previewSide === 'front' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${previewSide === 'front'
+                    ? 'bg-violet-600 text-white'
+                    : 'text-slate-400 hover:text-slate-200'
                   }`}
               >
-                Anverso
+                Pregunta
               </button>
+
               <button
                 type="button"
                 onClick={() => setPreviewSide('back')}
-                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${previewSide === 'back' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${previewSide === 'back'
+                    ? 'bg-violet-600 text-white'
+                    : 'text-slate-400 hover:text-slate-200'
                   }`}
               >
-                Reverso
+                Respuesta
               </button>
             </div>
           </div>
 
-          {/* Preview Card Box */}
           <div className="w-full aspect-[4/3] rounded-3xl border border-slate-900 bg-slate-900/10 p-6 flex flex-col justify-between shadow-xl relative overflow-hidden">
-            {/* Ambient glows */}
             <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-violet-600/5 blur-3xl" />
             <div className="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-indigo-600/5 blur-3xl" />
 
@@ -220,8 +395,9 @@ export default function CardForm() {
                 <Tag size={10} />
                 {topic || 'Categoría'}
               </span>
+
               <span className={`text-[9px] font-black border rounded px-1.5 py-0.5 uppercase tracking-wider ${difficultyColors[difficulty]}`}>
-                {difficulty === 'easy' ? 'Fácil' : difficulty === 'medium' ? 'Medio' : 'Difícil'}
+                {difficultyLabels[difficulty]}
               </span>
             </div>
 
