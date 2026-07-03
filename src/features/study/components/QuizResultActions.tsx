@@ -6,7 +6,11 @@ type QuizResultActionsProps = {
   onRecordResult: (result: 'hit' | 'miss') => void;
 };
 
-export default function QuizResultActions({ cardId, onNextCard, onRecordResult }: QuizResultActionsProps) {
+export default function QuizResultActions({
+  cardId,
+  onNextCard,
+  onRecordResult,
+}: QuizResultActionsProps) {
   const recordResult = useCardStore((state) => state.recordResult);
 
   const handleCorrect = () => {
@@ -22,17 +26,17 @@ export default function QuizResultActions({ cardId, onNextCard, onRecordResult }
   };
 
   return (
-    <div className="mt-1 flex flex-col justify-center gap-3 sm:flex-row">
+    <div className="mt-1 flex flex-col justify-center gap-3 sm:flex-row max-sm:grid max-sm:grid-cols-2 max-sm:gap-2">
       <button
         onClick={handleIncorrect}
-        className="rounded-xl border border-rose-300 px-5 py-3 min-w-[140px] font-semibold text-rose-600 transition-colors hover:bg-rose-50 dark:border-rose-800 dark:text-rose-300 dark:hover:bg-rose-950/40"
+        className="rounded-xl border border-rose-300 px-5 py-3 min-w-[140px] font-semibold text-rose-600 transition-colors hover:bg-rose-50 dark:border-rose-800 dark:text-rose-300 dark:hover:bg-rose-950/40 max-sm:min-w-0 max-sm:px-3 max-sm:py-2 max-sm:text-xs"
       >
         No lo sabía
       </button>
 
       <button
         onClick={handleCorrect}
-        className="rounded-xl border border-emerald-300 px-5 py-3 min-w-[140px] font-semibold text-emerald-600 transition-colors hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-300 dark:hover:bg-emerald-950/40"
+        className="rounded-xl border border-emerald-300 px-5 py-3 min-w-[140px] font-semibold text-emerald-600 transition-colors hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-300 dark:hover:bg-emerald-950/40 max-sm:min-w-0 max-sm:px-3 max-sm:py-2 max-sm:text-xs"
       >
         Lo sabía
       </button>
