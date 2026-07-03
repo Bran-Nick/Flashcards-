@@ -34,11 +34,15 @@ export default function StudyLayout({
           backLabel={backLabel}
         />
 
-        <div className="flex justify-center">
+        <main
+          role="region"
+          aria-labelledby="study-layout-title"
+          className="flex justify-center"
+        >
           <div className="w-full max-w-4xl">
             {children}
           </div>
-        </div>
+        </main>
       </PageShell>
     );
   }
@@ -50,11 +54,14 @@ export default function StudyLayout({
           title={title}
           subtitle={subtitle}
           showDivider={false}
+          variant="session"
           actions={
             onBack ? (
               <button
                 onClick={onBack}
-                className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 transition-colors hover:text-violet-400"
+                aria-label={backLabel}
+                className={`inline-flex items-center gap-2 font-semibold text-slate-400 transition-colors hover:text-violet-400 rounded-md
+          ${variant === 'session' ? 'text-xs sm:text-sm' : 'text-sm'}`}
               >
                 ← {backLabel}
               </button>
@@ -63,11 +70,15 @@ export default function StudyLayout({
         />
       </div>
 
-      <div className="flex flex-1 justify-center pt-3 pb-6">
+      <main
+        role="region"
+        aria-labelledby="study-layout-title"
+        className="flex flex-1 justify-center pt-3 pb-6"
+      >
         <div className="w-full max-w-4xl">
           {children}
         </div>
-      </div>
+      </main>
     </>
   );
 }

@@ -17,6 +17,7 @@ export default function ReviewPage() {
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [isSessionFinished, setIsSessionFinished] = useState(false);
+  const [direction, setDirection] = useState<'next' | 'prev'>('next');
 
   const topics = Array.from(
     new Set(cards.map((card) => card.topic))
@@ -46,7 +47,6 @@ export default function ReviewPage() {
   const completedCards = currentIndex + (showAnswer ? 1 : 0);
   const progress = (completedCards / reviewCards.length) * 100;
   const visibleProgress = Math.max(progress, 1);
-  const [direction, setDirection] = useState<'next' | 'prev'>('next');
 
   const handleNextCard = () => {
     if (currentIndex < reviewCards.length - 1) {
@@ -91,11 +91,15 @@ export default function ReviewPage() {
   if (reviewCards.length === 0) {
     return (
       <StudyLayout title="Modo Repaso">
-        <div className="mx-auto max-w-2xl rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
-          <p className="text-slate-600 dark:text-slate-400">
-            No hay tarjetas disponibles para repasar.
-          </p>
-        </div>
+        <div
+  role="alert"
+  aria-live="polite"
+  className="mx-auto max-w-2xl rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-slate-900 dark:bg-slate-900/20"
+>
+  <p className="text-slate-600 dark:text-slate-400">
+    No hay tarjetas disponibles para repasar.
+  </p>
+</div>
       </StudyLayout>
     );
   }
