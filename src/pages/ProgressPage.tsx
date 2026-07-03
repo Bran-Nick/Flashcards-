@@ -6,6 +6,7 @@ import PageShell from '../components/PageShell';
 
 export default function ProgressPage() {
   usePageTitle("Progreso");
+
   const {
     currentStreak,
     bestStreak,
@@ -27,98 +28,110 @@ export default function ProgressPage() {
 
   return (
     <PageShell size="narrow">
-
-      {/* Header */}
       <PageHeader
         title="Tu progreso"
         subtitle="Estadísticas generales y rachas de estudio."
         backTo="/"
       />
 
-      {/* Tarjetas superiores: racha actual, mejor racha, progreso */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-
-        <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-7 space-y-3">
-          <div className="flex items-center justify-center gap-2 text-orange-400">
-            <Flame size={20} />
-            <p className="text-xs font-bold uppercase tracking-wider">Racha actual</p>
+      <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-4" aria-label="Resumen de progreso">
+        <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-3 md:p-7 space-y-2 md:space-y-3">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 text-orange-400">
+            <Flame size={18} className="md:size-5" aria-hidden="true" />
+            <p className="text-[9px] md:text-xs font-bold uppercase tracking-wider text-center">Racha actual</p>
           </div>
+
           <div className="flex flex-1 flex-col justify-center">
-            <p className="text-center text-4xl font-extrabold text-white">
+            <p className="text-center text-2xl md:text-4xl font-extrabold text-white">
               {currentStreak}
-              <span className="ml-2 text-lg font-semibold text-slate-400">
+              <span className="ml-1 md:ml-2 text-xs md:text-lg font-semibold text-slate-400">
                 días
               </span>
             </p>
           </div>
+
           {currentStreak === 0 && (
-            <p className="text-xs text-slate-500">Completá un quiz para iniciar tu racha.</p>
+            <p className="hidden md:block text-xs text-slate-500">
+              Completá un quiz para iniciar tu racha.
+            </p>
           )}
         </div>
 
-        <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-7 space-y-3">
-          <div className="flex items-center justify-center gap-2 text-yellow-400">
-            <Trophy size={20} />
-            <p className="text-xs font-bold uppercase tracking-wider">Mejor racha</p>
+        <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-3 md:p-7 space-y-2 md:space-y-3">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 text-yellow-400">
+            <Trophy size={18} className="md:size-5" aria-hidden="true" />
+            <p className="text-[9px] md:text-xs font-bold uppercase tracking-wider text-center">Mejor racha</p>
           </div>
-          <p className="text-center text-4xl font-extrabold text-white">
+
+          <p className="text-center text-2xl md:text-4xl font-extrabold text-white">
             {bestStreak}
-            <span className="ml-2 text-lg font-semibold text-slate-400">
+            <span className="ml-1 md:ml-2 text-xs md:text-lg font-semibold text-slate-400">
               días
             </span>
           </p>
         </div>
 
-        <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 space-y-2">
-          <div className="flex items-center justify-center gap-2 text-violet-400">
-            <TrendingUp size={20} />
-            <p className="text-xs font-bold uppercase tracking-wider">Progreso general</p>
+        <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-3 md:p-6 space-y-2">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 text-violet-400">
+            <TrendingUp size={18} className="md:size-5" aria-hidden="true" />
+            <p className="text-[9px] md:text-xs font-bold uppercase tracking-wider text-center">
+              <span className="md:hidden">Progreso</span>
+              <span className="hidden md:inline">Progreso general</span>
+            </p>
           </div>
-          <p className="text-4xl font-extrabold text-white text-center">{accuracyPercentage}%</p>
-          <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+
+          <p
+            className="text-2xl md:text-4xl font-extrabold text-white text-center"
+            aria-label={`Progreso general ${accuracyPercentage}%`}
+          >
+            {accuracyPercentage}%
+          </p>
+
+          <div className="h-1.5 md:h-2 w-full bg-slate-800 rounded-full overflow-hidden">
             <div
               className={`h-full rounded-full transition-all duration-500 ${barColor}`}
               style={{ width: `${accuracyPercentage}%` }}
             />
           </div>
         </div>
-
       </div>
 
-      {/* Desempeño general */}
-      <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 space-y-4">
-        <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
+      <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 md:p-6 space-y-4">
+        <h2 className="text-xs md:text-sm font-bold uppercase tracking-wider text-slate-400">
           Desempeño general
         </h2>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 text-center space-y-1">
+
+        <div className="grid grid-cols-3 gap-2 md:gap-4">
+          <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-2 md:p-4 text-center space-y-1">
             <div className="flex items-center justify-center gap-1 text-emerald-400">
-              <CheckCircle2 size={14} />
-              <span className="text-[10px] font-bold uppercase tracking-wider">Aciertos</span>
+              <CheckCircle2 size={14} aria-hidden="true" />
+              <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider">Aciertos</span>
             </div>
-            <p className="text-2xl font-extrabold text-emerald-400">{totalHits}</p>
+            <p className="text-xl md:text-2xl font-extrabold text-emerald-400">{totalHits}</p>
           </div>
-          <div className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-4 text-center space-y-1">
+
+          <div className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-2 md:p-4 text-center space-y-1">
             <div className="flex items-center justify-center gap-1 text-rose-400">
-              <XCircle size={14} />
-              <span className="text-[10px] font-bold uppercase tracking-wider">Errores</span>
+              <XCircle size={14} aria-hidden="true" />
+              <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider">Errores</span>
             </div>
-            <p className="text-2xl font-extrabold text-rose-400">{totalMisses}</p>
+            <p className="text-xl md:text-2xl font-extrabold text-rose-400">{totalMisses}</p>
           </div>
-          <div className="rounded-xl border border-slate-500/20 bg-slate-500/5 p-4 text-center space-y-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300">
-              Total respuestas
+
+          <div className="rounded-xl border border-slate-500/20 bg-slate-500/5 p-2 md:p-4 text-center space-y-1">
+            <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300">
+              <span className="md:hidden">Total</span>
+              <span className="hidden md:inline">Total respuestas</span>
             </span>
-            <p className="text-2xl font-extrabold text-slate-800 dark:text-white">{totalAnswers}</p>
+            <p className="text-xl md:text-2xl font-extrabold text-slate-800 dark:text-white">{totalAnswers}</p>
           </div>
         </div>
       </div>
 
-      {/* Sesiones recientes */}
-      <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 space-y-4">
+      <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 md:p-6 space-y-4">
         <div className="flex items-center gap-2 text-slate-400">
-          <Calendar size={16} />
-          <h2 className="text-sm font-bold uppercase tracking-wider">Sesiones recientes</h2>
+          <Calendar size={16} aria-hidden="true" />
+          <h2 className="text-xs md:text-sm font-bold uppercase tracking-wider">Sesiones recientes</h2>
         </div>
 
         {sessionHistory.length === 0 ? (
@@ -135,16 +148,21 @@ export default function ProgressPage() {
                 month: '2-digit',
                 year: 'numeric',
               });
+
               return (
                 <div
                   key={index}
-                  className="grid grid-cols-[1fr_1fr_1fr_1fr] items-center rounded-xl border border-slate-500/20 bg-slate-500/5 px-4 py-3 text-sm text-center"
+                  className="grid grid-cols-4 items-center rounded-xl border border-slate-500/20 bg-slate-500/5 px-3 md:px-4 py-2 md:py-3 text-xs md:text-sm text-center"
                 >
-                  <p className="text-slate-500 dark:text-slate-300">
-                    {date}
+                  <p className="text-slate-500 dark:text-slate-300">{date}</p>
+                  <p className="text-emerald-500 font-semibold">
+                    <span className="md:hidden">{session.hits} ✓</span>
+                    <span className="hidden md:inline">{session.hits} aciertos</span>
                   </p>
-                  <p className="text-emerald-500 font-semibold">{session.hits} aciertos</p>
-                  <p className="text-rose-500 font-semibold">{session.misses} errores</p>
+                  <p className="text-rose-500 font-semibold">
+                    <span className="md:hidden">{session.misses} ✕</span>
+                    <span className="hidden md:inline">{session.misses} errores</span>
+                  </p>
                   <p className="text-slate-800 dark:text-white font-bold">{pct}%</p>
                 </div>
               );
@@ -152,7 +170,6 @@ export default function ProgressPage() {
           </div>
         )}
       </div>
-
     </PageShell>
   );
 }
