@@ -48,14 +48,14 @@ export default function CardsToolbar({
 
   return (
     <div
-      className="flex items-center justify-between gap-3 bg-slate-900/10 border border-slate-900/40 p-4 rounded-2xl shrink-0"
+      className="flex shrink-0 items-center justify-between gap-2 rounded-2xl border border-slate-900/40 bg-slate-900/10 p-3 sm:gap-3 sm:p-4"
       role="toolbar"
       aria-label="Herramientas de búsqueda y filtros"
     >
       {/* Mobile search */}
       <div
         ref={searchRef}
-        className={`sm:hidden flex h-11 items-center rounded-xl border border-slate-800 bg-slate-950 text-slate-400 transition-all ${
+        className={`flex h-11 items-center rounded-xl border border-slate-800 bg-slate-950 text-slate-400 transition-all sm:hidden ${
           isSearchOpen ? 'w-full px-3' : 'w-11 justify-center'
         }`}
       >
@@ -65,7 +65,7 @@ export default function CardsToolbar({
           aria-label={isSearchOpen ? "Cerrar búsqueda" : "Abrir búsqueda"}
           aria-expanded={isSearchOpen}
           aria-controls="mobile-search-input"
-          className="flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-violet-500 rounded-md"
+          className="flex items-center justify-center rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500"
         >
           <Search size={17} aria-hidden="true" />
         </button>
@@ -78,17 +78,17 @@ export default function CardsToolbar({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Buscar por pregunta o respuesta"
-            className="ml-2 min-w-0 flex-1 bg-transparent text-xs text-slate-200 placeholder-slate-500 focus:outline-none"
+            className="ml-2 min-w-0 flex-1 bg-transparent text-sm text-slate-200 placeholder-slate-500 focus:outline-none"
           />
         )}
       </div>
 
       {/* Desktop search */}
-      <div className="relative hidden sm:block flex-1 max-w-md">
+      <div className="relative hidden max-w-md flex-1 sm:block">
         <label htmlFor="desktop-search-input" className="sr-only">
           Buscar por pregunta o respuesta
         </label>
-        <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
+        <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-500">
           <Search size={15} aria-hidden="true" />
         </span>
 
@@ -98,14 +98,14 @@ export default function CardsToolbar({
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Buscar por pregunta o respuesta..."
-          className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-900 bg-slate-950 text-xs sm:text-sm text-slate-200 placeholder-slate-500 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-all font-medium"
+          className="w-full rounded-xl border border-slate-900 bg-slate-950 py-2.5 pl-10 pr-4 text-xs font-medium text-slate-200 placeholder-slate-500 transition-all focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 sm:text-sm"
         />
       </div>
 
       {/* Desktop filter */}
-      <div className="hidden sm:flex items-center gap-3">
+      <div className="hidden items-center gap-3 sm:flex">
         <span
-          className="text-slate-500 text-xs font-semibold flex items-center gap-1.5 shrink-0"
+          className="flex shrink-0 items-center gap-1.5 text-xs font-semibold text-slate-500"
           id="desktop-filter-label"
         >
           <SlidersHorizontal size={14} aria-hidden="true" />
@@ -116,11 +116,17 @@ export default function CardsToolbar({
           aria-labelledby="desktop-filter-label"
           value={selectedTopic}
           onChange={(e) => setSelectedTopic(e.target.value)}
-          className="rounded-xl border border-slate-900 bg-slate-950 text-xs sm:text-sm text-slate-400 px-4 py-2.5 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-all font-semibold"
+          className="rounded-xl border border-slate-900 bg-slate-950 px-4 py-2.5 text-xs font-semibold text-slate-400 transition-all focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 sm:text-sm"
         >
-          <option value="all">Todos los temas</option>
+          <option value="all" className="bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+            Todos los temas
+          </option>
           {topics.map((topic) => (
-            <option key={topic} value={topic}>
+            <option
+              key={topic}
+              value={topic}
+              className="bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100"
+            >
               {topic}
             </option>
           ))}
@@ -164,7 +170,7 @@ export default function CardsToolbar({
               type="button"
               role="menuitem"
               onClick={() => handleSelectTopic('all')}
-              className={`block w-full px-4 py-2.5 text-left text-xs font-semibold transition-colors focus:outline-none focus:bg-violet-600/20 ${
+              className={`block w-full px-4 py-2.5 text-left text-xs font-semibold transition-colors focus:bg-violet-600/20 focus:outline-none ${
                 selectedTopic === 'all'
                   ? 'bg-violet-600/10 text-violet-400'
                   : 'text-slate-300 hover:bg-slate-900'
@@ -179,10 +185,10 @@ export default function CardsToolbar({
                 type="button"
                 role="menuitem"
                 onClick={() => handleSelectTopic(topic)}
-                className={`block w-full px-4 py-2.5 text-left text-xs font-semibold transition-colors focus:outline-none focus:bg-violet-600/20 ${
+                className={`block w-full px-4 py-2.5 text-left text-xs font-semibold transition-colors focus:bg-violet-600/20 focus:outline-none ${
                   selectedTopic === topic
                     ? 'bg-violet-600/10 text-violet-400'
-                    : 'text-slate-300 hover:bg-slate-900'
+                    : 'text-slate-500 hover:bg-slate-900'
                 }`}
               >
                 {topic}

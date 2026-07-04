@@ -38,7 +38,7 @@ export default function ProgressPage() {
       <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-4" aria-label="Resumen de progreso">
         {/* Racha actual */}
         <div role="group" aria-label="Racha actual" className="bg-slate-900/40 border border-slate-800 rounded-2xl p-3 md:p-7 space-y-2 md:space-y-3">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 text-orange-400">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 text-orange-500 md:text-orange-400">
             <Flame size={18} className="md:size-5" aria-hidden="true" />
             <p className="text-[9px] md:text-xs font-bold uppercase tracking-wider text-center">Racha actual</p>
           </div>
@@ -53,7 +53,7 @@ export default function ProgressPage() {
 
         {/* Mejor racha */}
         <div role="group" aria-label="Mejor racha" className="bg-slate-900/40 border border-slate-800 rounded-2xl p-3 md:p-7 space-y-2 md:space-y-3">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 text-yellow-400">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 text-yellow-500 md:text-yellow-400">
             <Trophy size={18} className="md:size-5" aria-hidden="true" />
             <p className="text-[9px] md:text-xs font-bold uppercase tracking-wider text-center">Mejor racha</p>
           </div>
@@ -65,7 +65,7 @@ export default function ProgressPage() {
 
         {/* Progreso general */}
         <div role="group" aria-label="Progreso general" className="bg-slate-900/40 border border-slate-800 rounded-2xl p-3 md:p-6 space-y-2">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 text-violet-400">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 text-violet-500 md:text-violet-400">
             <TrendingUp size={18} className="md:size-5" aria-hidden="true" />
             <p className="text-[9px] md:text-xs font-bold uppercase tracking-wider text-center">
               <span className="md:hidden">Progreso</span>
@@ -93,21 +93,21 @@ export default function ProgressPage() {
         <h2 className="text-xs md:text-sm font-bold uppercase tracking-wider text-slate-400">Desempeño general</h2>
         <div className="grid grid-cols-3 gap-2 md:gap-4">
           <div role="group" aria-label="Cantidad de aciertos" className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-2 md:p-4 text-center space-y-1">
-            <div className="flex items-center justify-center gap-1 text-emerald-400">
+            <div className="flex items-center justify-center gap-1 text-emerald-600 md:text-emerald-400 dark:text-emerald-400">
               <CheckCircle2 size={14} aria-hidden="true" />
               <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider">Aciertos</span>
             </div>
-            <p className="text-xl md:text-2xl font-extrabold text-emerald-400">{totalHits}</p>
+            <p className="text-xl md:text-2xl font-extrabold text-emerald-600 md:text-emerald-400 dark:text-emerald-400">{totalHits}</p>
           </div>
           <div role="group" aria-label="Cantidad de errores" className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-2 md:p-4 text-center space-y-1">
-            <div className="flex items-center justify-center gap-1 text-rose-400">
+            <div className="flex items-center justify-center gap-1 text-rose-600 md:text-rose-400 dark:text-rose-400">
               <XCircle size={14} aria-hidden="true" />
               <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider">Errores</span>
             </div>
-            <p className="text-xl md:text-2xl font-extrabold text-rose-400">{totalMisses}</p>
+            <p className="text-xl md:text-2xl font-extrabold text-rose-600 md:text-rose-400 dark:text-rose-400">{totalMisses}</p>
           </div>
           <div role="group" aria-label="Total de respuestas" className="rounded-xl border border-slate-500/20 bg-slate-500/5 p-2 md:p-4 text-center space-y-1">
-            <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300">
+            <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-slate-600 md:text-slate-500 dark:text-slate-300">
               <span className="md:hidden">Total</span>
               <span className="hidden md:inline">Total respuestas</span>
             </span>
@@ -139,14 +139,14 @@ export default function ProgressPage() {
                 <div
                   key={index}
                   role="row"
-                  className="grid grid-cols-4 items-center rounded-xl border border-slate-500/20 bg-slate-500/5 px-3 md:px-4 py-2 md:py-3 text-xs md:text-sm text-center"
+                  className="grid grid-cols-4 items-center rounded-xl border border-slate-500/20 bg-slate-500/5 px-3 md:px-4 py-2 md:py-3 text-[0.8rem] font-medium md:text-sm md:font-normal text-center"
                 >
                   <p role="cell" className="text-slate-500 dark:text-slate-300">{date}</p>
-                  <p role="cell" className="text-emerald-500 font-semibold">
+                  <p role="cell" className="text-emerald-600 md:text-emerald-500 dark:text-emerald-400 font-semibold">
                     <span className="md:hidden">{session.hits} ✓</span>
                     <span className="hidden md:inline">{session.hits} aciertos</span>
                   </p>
-                  <p role="cell" className="text-rose-500 font-semibold">
+                  <p role="cell" className="text-rose-600 md:text-rose-500 dark:text-rose-400 font-semibold">
                     <span className="md:hidden">{session.misses} ✕</span>
                     <span className="hidden md:inline">{session.misses} errores</span>
                   </p>

@@ -69,7 +69,7 @@ export default function Navbar() {
             aria-label={isMenuOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-navigation"
-            className="md:hidden p-2 rounded-lg text-slate-300 hover:bg-slate-900 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            className="flex h-11 w-11 items-center justify-center rounded-lg text-slate-300 transition-colors hover:bg-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 md:hidden"
           >
             {isMenuOpen ? <X aria-hidden="true" size={20} /> : <Menu aria-hidden="true" size={20} />}
           </button>
@@ -79,7 +79,7 @@ export default function Navbar() {
           <nav
             id="mobile-navigation"
             aria-label="Navegación principal móvil"
-            className="fixed left-0 right-0 top-16 z-[60] md:hidden border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 px-4 py-3 shadow-xl shadow-slate-300/30 dark:shadow-slate-950/40 backdrop-blur-md"
+            className="fixed left-0 right-0 top-16 z-[60] max-h-[calc(100svh-4rem)] overflow-y-auto border-t border-slate-200 bg-white/95 px-4 py-3 shadow-xl shadow-slate-300/30 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/95 dark:shadow-slate-950/40 md:hidden"
           >
             <div className="flex flex-col gap-2">
               {navItems.map((item) => (
@@ -89,7 +89,7 @@ export default function Navbar() {
                   to={item.to}
                   end={item.exact}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950
+                    `flex min-h-11 items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950
                   ${isActive
                       ? 'bg-violet-600/10 text-violet-500 border border-violet-500/20'
                       : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 border border-transparent'
@@ -101,7 +101,7 @@ export default function Navbar() {
                 </NavLink>
               ))}
 
-              <div className="mt-2 border-t border-slate-800 pt-3">
+              <div className="mt-2 border-t border-slate-200 pt-3 dark:border-slate-800">
                 <p className="mb-2 px-3 text-sm font-medium text-slate-500 dark:text-slate-400">
                   Preferencias
                 </p>
