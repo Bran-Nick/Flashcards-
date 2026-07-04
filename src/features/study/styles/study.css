@@ -1,4 +1,7 @@
-/* Deck selector cards */
+/* =========================
+   Deck selector
+========================= */
+
 .deck-card {
   position: relative;
   min-height: 110px;
@@ -39,7 +42,6 @@
     0 10px 24px rgba(139, 92, 246, 0.08);
 }
 
-/* Estado base del mazo */
 .deck-card::before {
   transform: translate(6px, -4px);
 }
@@ -48,58 +50,56 @@
   transform: translate(6px, 4px);
 }
 
-/* Mobile: se presiona como botón, no se abre el mazo */
-@media (max-width: 639px) {
-  .deck-card:active .deck-card-front {
-    transform: translate(2px, 2px) scale(0.98);
-  }
+/* =========================
+   Shared study session
+========================= */
 
-  .deck-card:active::before {
-    transform: translate(8px, -2px) scale(0.98);
-  }
-
-  .deck-card:active::after {
-    transform: translate(8px, 6px) scale(0.98);
-  }
+.study-question {
+  font-size: 1.5rem;
 }
 
-/* Desktop/tablet: hover con efecto de mazo abierto */
-@media (min-width: 640px) {
-  .deck-card {
-    min-height: 120px;
-  }
-
-  .deck-card:hover {
-    z-index: 20;
-  }
-
-  .deck-card:hover .deck-card-front {
-    border-color: rgb(139 92 246);
-    box-shadow:
-      0 0 0 1px rgba(139, 92, 246, 0.25),
-      0 12px 30px rgba(139, 92, 246, 0.15);
-  }
-
-  .deck-card:hover::before {
-    transform: translate(16px, -12px) rotate(-6deg);
-  }
-
-  .deck-card:hover::after {
-    transform: translate(16px, 12px) rotate(6deg);
-  }
+.study-answer {
+  font-size: 1.125rem;
 }
 
-/* Dark mode */
-.dark .deck-card::before,
-.dark .deck-card::after {
-  border-color: #334155;
-  background: #111827;
+.study-label-mobile {
+  display: none;
 }
 
-.dark .deck-card-front {
-  border-color: #334155;
-  background: #020617;
+.study-card-deck {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
 }
+
+.study-card-deck-item {
+  position: absolute;
+  width: 88%;
+  height: 82%;
+  left: 6%;
+  top: 9%;
+  border-radius: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  background: rgba(248, 250, 252, 0.9);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+}
+
+.study-card-deck-item:nth-child(1) {
+  transform: translate(-45px, -32px) rotate(-7deg);
+}
+
+.study-card-deck-item:nth-child(2) {
+  transform: translate(48px, -18px) rotate(6deg);
+}
+
+.study-card-deck-item:nth-child(3) {
+  transform: translate(5px, 30px) rotate(4deg);
+}
+
+/* =========================
+   Flip card
+========================= */
 
 .review-flip-card {
   perspective: 1200px;
@@ -107,6 +107,7 @@
 
 .review-flip-inner {
   position: relative;
+  z-index: 2;
   min-height: 260px;
   transform-style: preserve-3d;
   transition:
@@ -144,27 +145,36 @@
   transform: rotateY(-180deg);
 }
 
-.dark .review-flip-face {
-  border-color: #334155;
+/* =========================
+   Quiz
+========================= */
+
+.quiz-result-button {
+  min-width: 140px;
 }
 
-.dark .review-flip-front {
-  background: rgba(30, 41, 59, 0.4);
-  border-color: rgba(148, 163, 184, 0.35);
-  box-shadow:
-    0 0 20px rgba(255, 255, 255, 0.15),
-    0 8px 25px rgba(255, 255, 255, 0.1);
+.reveal-button {
+  position: relative;
+  overflow: hidden;
 }
 
-.dark .review-flip-back {
-  background: rgba(46, 16, 101, 0.55);
-  border-color: rgba(139, 92, 246, 0.5);
-  box-shadow:
-    0 0 20px rgba(255, 255, 255, 0.15),
-    0 8px 25px rgba(255, 255, 255, 0.1);
+.reveal-button.is-loading {
+  background: #64748b;
 }
 
-/* Animaciones de entrada de tarjetas */
+.reveal-button.is-loading::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(139 92 246);
+  transform: translateX(-100%);
+  animation: reveal-button-fill 3s linear forwards;
+}
+
+/* =========================
+   Animations
+========================= */
+
 @keyframes study-card-enter-next {
   from {
     opacity: 0;
@@ -189,6 +199,12 @@
   }
 }
 
+@keyframes reveal-button-fill {
+  to {
+    transform: translateX(0);
+  }
+}
+
 .study-card-enter-next {
   animation: study-card-enter-next 220ms ease-out;
 }
@@ -197,42 +213,39 @@
   animation: study-card-enter-prev 220ms ease-out;
 }
 
+/* =========================
+   Dark mode
+========================= */
 
-/*tarjetas amontonadas*/
-.study-card-deck {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
+.dark .deck-card::before,
+.dark .deck-card::after {
+  border-color: #334155;
+  background: #111827;
 }
 
-.study-card-deck-item {
-  position: absolute;
-  width: 88%;
-  height: 82%;
-  left: 6%;
-  top: 9%;
-  border-radius: 1rem;
-  border: 1px solid rgba(148, 163, 184, 0.45);
-  background: rgba(248, 250, 252, 0.9);
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+.dark .deck-card-front {
+  border-color: #334155;
+  background: #020617;
 }
 
-.study-card-deck-item:nth-child(1) {
-  transform: translate(-45px, -32px) rotate(-7deg);
+.dark .review-flip-face {
+  border-color: #334155;
 }
 
-.study-card-deck-item:nth-child(2) {
-  transform: translate(48px, -18px) rotate(6deg);
+.dark .review-flip-front {
+  background: rgba(30, 41, 59, 0.4);
+  border-color: rgba(148, 163, 184, 0.35);
+  box-shadow:
+    0 0 20px rgba(255, 255, 255, 0.15),
+    0 8px 25px rgba(255, 255, 255, 0.1);
 }
 
-.study-card-deck-item:nth-child(3) {
-  transform: translate(5px, 30px) rotate(4deg);
-}
-
-.review-flip-inner {
-  position: relative;
-  z-index: 2;
+.dark .review-flip-back {
+  background: rgba(46, 16, 101, 0.55);
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow:
+    0 0 20px rgba(255, 255, 255, 0.15),
+    0 8px 25px rgba(255, 255, 255, 0.1);
 }
 
 .dark .study-card-deck-item {
@@ -241,36 +254,15 @@
   box-shadow: none;
 }
 
-
-
-.reveal-button {
-  position: relative;
-  overflow: hidden;
-}
-
-.reveal-button.is-loading {
-  background: #64748b;
-}
-
-.reveal-button.is-loading::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgb(139 92 246);
-  transform: translateX(-100%);
-  animation: reveal-button-fill 3s linear forwards;
-}
-
-@keyframes reveal-button-fill {
-  to {
-    transform: translateX(0);
-  }
-}
+/* =========================
+   Desktop/tablet interactions
+========================= */
 
 @media (min-width: 640px) {
   .deck-card {
     min-height: 120px;
   }
+
   .deck-card:hover {
     z-index: 20;
   }
@@ -291,10 +283,158 @@
   }
 }
 
+/* =========================
+   Mobile responsive
+========================= */
+
 @media (max-width: 639px) {
-  .deck-card:active .deck-card-front,
-  .deck-card:active::before,
-  .deck-card:active::after {
+  .deck-card:active .deck-card-front {
     transform: translate(2px, 2px) scale(0.98);
+  }
+
+  .deck-card:active::before {
+    transform: translate(8px, -2px) scale(0.98);
+  }
+
+  .deck-card:active::after {
+    transform: translate(8px, 6px) scale(0.98);
+  }
+
+  .study-session {
+    width: 100%;
+    padding-inline: clamp(0.75rem, 4vw, 1.25rem);
+  }
+
+  .study-session-panel {
+    padding: clamp(1.25rem, 5vw, 1.75rem);
+  }
+
+  .study-progress {
+    margin-bottom: clamp(1.25rem, 4svh, 1.75rem);
+  }
+
+  .study-progress-text {
+    font-size: clamp(0.8rem, 3.4vw, 0.95rem);
+  }
+
+  .study-progressbar {
+    height: clamp(0.45rem, 1.5vw, 0.6rem);
+  }
+
+  .review-flip-card {
+    margin-top: clamp(1.5rem, 5svh, 2.25rem);
+  }
+
+  .review-flip-inner {
+    min-height: clamp(280px, 42svh, 390px);
+  }
+
+  .review-flip-face {
+    padding: clamp(1.25rem, 6vw, 2rem);
+  }
+
+  .study-card-content {
+    min-height: clamp(220px, 34svh, 320px);
+  }
+
+  .study-question {
+    font-size: clamp(1.35rem, 6vw, 2rem);
+    line-height: 1.35;
+  }
+
+  .study-answer-label {
+    margin-bottom: clamp(0.75rem, 2.5vw, 1rem);
+    font-size: clamp(0.7rem, 2.8vw, 0.82rem);
+  }
+
+  .study-answer {
+    font-size: clamp(1rem, 4.4vw, 1.3rem);
+    line-height: 1.55;
+  }
+
+  .study-card-deck {
+    display: none;
+  }
+
+  .study-actions {
+    margin-top: clamp(1.5rem, 5svh, 2.25rem);
+    align-items: center;
+    gap: clamp(0.5rem, 2.5vw, 0.75rem);
+  }
+
+  .study-actions > div {
+    width: 100%;
+  }
+
+  .study-actions .flex {
+    justify-content: stretch;
+  }
+
+  .study-actions .pb-4 {
+    padding-bottom: 0;
+  }
+
+  .study-button {
+    width: 100%;
+    min-height: 44px;
+    padding: clamp(0.7rem, 3vw, 0.9rem) clamp(0.55rem, 2.5vw, 0.9rem);
+    font-size: clamp(0.78rem, 3.2vw, 0.92rem);
+    font-weight: 700;
+  }
+
+  .study-label-desktop {
+    display: none;
+  }
+
+  .study-label-mobile {
+    display: inline;
+  }
+
+  .study-mobile-deck {
+    padding: clamp(0.9rem, 4vw, 1.2rem);
+  }
+
+  .study-mobile-deck p:first-child {
+    font-size: clamp(0.68rem, 2.8vw, 0.78rem);
+  }
+
+  .study-mobile-deck p:last-child {
+    font-size: clamp(0.9rem, 3.8vw, 1rem);
+  }
+
+  .study-mobile-deck button {
+    font-size: clamp(0.82rem, 3.2vw, 0.95rem);
+  }
+
+  .quiz-actions {
+    margin-top: clamp(1.5rem, 5svh, 2.25rem);
+  }
+
+  .quiz-actions .study-button {
+    padding: clamp(0.7rem, 3vw, 0.9rem) clamp(0.9rem, 4vw, 1.25rem);
+    font-size: clamp(0.85rem, 3.4vw, 0.95rem);
+  }
+
+  .quiz-result-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(0.5rem, 2.5vw, 0.75rem);
+  }
+
+  .quiz-result-button {
+    min-width: 0;
+  }
+
+  .quiz-helper-row {
+    gap: 0.75rem;
+  }
+
+  .quiz-helper-row button {
+    font-size: clamp(0.78rem, 3.2vw, 0.9rem);
+    font-weight: 600;
+  }
+
+  .quiz-helper-row p {
+    font-size: clamp(0.72rem, 3vw, 0.82rem);
   }
 }

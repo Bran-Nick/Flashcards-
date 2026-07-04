@@ -26,11 +26,11 @@ export default function QuizResultActions({
   };
 
   return (
-    <div className="mt-1 flex flex-col justify-center gap-3 sm:flex-row max-sm:grid max-sm:grid-cols-2 max-sm:gap-2">
+    <div className="quiz-result-actions mt-1 flex flex-col justify-center gap-3 sm:flex-row">
       <button
         onClick={handleIncorrect}
         aria-label="Marcar como incorrecto y pasar a la siguiente tarjeta"
-        className="rounded-xl border border-rose-300 px-5 py-3 min-w-[140px] font-semibold text-rose-600 transition-colors hover:bg-rose-50 focus:outline-none focus:ring-2 focus:ring-rose-400 dark:border-rose-800 dark:text-rose-300 dark:hover:bg-rose-950/40 max-sm:min-w-0 max-sm:px-3 max-sm:py-2 max-sm:text-xs"
+        className="study-button quiz-result-button rounded-xl border border-rose-300 px-5 py-3 font-semibold text-rose-600 transition-colors hover:bg-rose-50 focus:outline-none focus:ring-2 focus:ring-rose-400 dark:border-rose-800 dark:text-rose-300 dark:hover:bg-rose-950/40"
       >
         No lo sabía
       </button>
@@ -38,7 +38,7 @@ export default function QuizResultActions({
       <button
         onClick={handleCorrect}
         aria-label="Marcar como correcto y pasar a la siguiente tarjeta"
-        className="rounded-xl border border-emerald-300 px-5 py-3 min-w-[140px] font-semibold text-emerald-600 transition-colors hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-emerald-400 dark:border-emerald-800 dark:text-emerald-300 dark:hover:bg-emerald-950/40 max-sm:min-w-0 max-sm:px-3 max-sm:py-2 max-sm:text-xs"
+        className="study-button quiz-result-button rounded-xl border border-emerald-300 px-5 py-3 font-semibold text-emerald-600 transition-colors hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-emerald-400 dark:border-emerald-800 dark:text-emerald-300 dark:hover:bg-emerald-950/40"
       >
         Lo sabía
       </button>

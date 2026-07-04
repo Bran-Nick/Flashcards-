@@ -27,7 +27,7 @@ export default function QuizSession({
   onRecordResult,
 }: QuizSessionProps) {
   return (
-    <div className="relative mx-auto max-w-2xl space-y-4 max-sm:px-4">
+    <div className="study-session relative mx-auto max-w-2xl space-y-4">
       <div className="absolute left-0 top-0 hidden -translate-x-[115%] lg:block">
         <div className="rounded-2xl border border-slate-200/70 bg-white/60 px-5 py-4 shadow-sm backdrop-blur-sm dark:border-slate-800/70 dark:bg-slate-900/30">
           <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
@@ -40,14 +40,14 @@ export default function QuizSession({
         </div>
       </div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-900 dark:bg-slate-900/20 max-sm:p-5">
-        <div className="mb-8 max-sm:mb-6">
+      <div className="study-session-panel rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
+        <div className="study-progress mb-8">
           <div className="mb-2 flex items-center justify-between gap-4">
-            <p className="text-sm text-slate-600 dark:text-slate-400 max-sm:text-xs">
+            <p className="study-progress-text text-sm text-slate-600 dark:text-slate-400">
               Tarjeta {currentIndex + 1} de {totalCards}
             </p>
 
-            <p className="text-sm font-semibold text-violet-600 dark:text-violet-300 max-sm:text-xs">
+            <p className="study-progress-text text-sm font-semibold text-violet-600 dark:text-violet-300">
               {Math.round(progress)}%
             </p>
           </div>
@@ -58,7 +58,7 @@ export default function QuizSession({
             aria-valuemin={0}
             aria-valuemax={totalCards}
             aria-label={`Progreso: ${Math.round(progress)}% completado`}
-            className="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800 max-sm:h-1.5"
+            className="study-progressbar h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800"
           >
             <div
               className="h-full rounded-full bg-violet-500 transition-all duration-300"
@@ -70,9 +70,9 @@ export default function QuizSession({
         <div
           key={currentCard.id}
           aria-live="polite"
-          className="review-flip-card relative mt-12 study-card-enter max-sm:mt-6"
+          className="review-flip-card relative mt-12 study-card-enter-next"
         >
-          <div className="study-card-deck max-sm:hidden" aria-hidden="true">
+          <div className="study-card-deck" aria-hidden="true">
             {Array.from({
               length: Math.min(3, Math.max(totalCards - currentIndex - 1, 0)),
             }).map((_, index) => (
@@ -84,22 +84,22 @@ export default function QuizSession({
             ))}
           </div>
 
-          <div className={`review-flip-inner max-sm:!min-h-[185px] ${showAnswer ? 'is-flipped' : ''}`}>
-            <div className="review-flip-face review-flip-front max-sm:!p-5">
-              <div className="flex h-full min-h-44 items-center max-sm:min-h-28">
-                <h2 className="text-2xl font-semibold leading-relaxed text-slate-950 dark:text-white max-sm:text-base">
+          <div className={`review-flip-inner ${showAnswer ? 'is-flipped' : ''}`}>
+            <div className="review-flip-face review-flip-front">
+              <div className="study-card-content flex h-full min-h-44 items-center">
+                <h2 className="study-question font-semibold leading-relaxed text-slate-950 dark:text-white">
                   {currentCard.question}
                 </h2>
               </div>
             </div>
 
-            <div className="review-flip-face review-flip-back max-sm:!p-5">
-              <div className="flex h-full min-h-44 flex-col justify-center max-sm:min-h-28">
-                <p className="mb-4 text-sm font-bold uppercase tracking-wider text-violet-500 dark:text-violet-300 max-sm:mb-2 max-sm:text-[10px]">
+            <div className="review-flip-face review-flip-back">
+              <div className="study-card-content flex h-full min-h-44 flex-col justify-center">
+                <p className="study-answer-label mb-4 text-sm font-bold uppercase tracking-wider text-violet-500 dark:text-violet-300">
                   Respuesta
                 </p>
 
-                <p className="text-lg leading-relaxed text-slate-700 dark:text-slate-200 max-sm:text-sm">
+                <p className="study-answer leading-relaxed text-slate-700 dark:text-slate-200">
                   {currentCard.answer}
                 </p>
               </div>
@@ -107,22 +107,20 @@ export default function QuizSession({
           </div>
         </div>
 
-        <div className="mt-8 max-sm:mt-7">
+        <div className="quiz-actions mt-8">
           {!showAnswer ? (
             <div className="flex justify-center">
               <button
                 onClick={onShowAnswer}
                 disabled={!canRevealAnswer}
-                aria-label={canRevealAnswer ? "Mostrar respuesta" : "Esperá unos segundos para ver la respuesta"}
-                className={`
-                  reveal-button
-                  rounded-xl
-                  px-6 py-3
-                  font-semibold
-                  !text-white
-                  max-sm:px-4 max-sm:py-2.5 max-sm:text-xs
-                  ${canRevealAnswer ? 'bg-violet-600 hover:bg-violet-500' : 'is-loading'}
-                `}
+                aria-label={
+                  canRevealAnswer
+                    ? 'Mostrar respuesta'
+                    : 'Esperá unos segundos para ver la respuesta'
+                }
+                className={`reveal-button study-button study-main-button rounded-xl px-6 py-3 font-semibold !text-white ${
+                  canRevealAnswer ? 'bg-violet-600 hover:bg-violet-500' : 'is-loading'
+                }`}
               >
                 <span className="relative z-10">Ver respuesta</span>
               </button>
@@ -135,16 +133,16 @@ export default function QuizSession({
                 onRecordResult={onRecordResult}
               />
 
-              <div className="flex items-center justify-between gap-3 max-sm:gap-2">
+              <div className="quiz-helper-row flex items-center justify-between gap-3">
                 <button
                   onClick={onShowAnswer}
                   aria-label="Volver a ver la pregunta"
-                  className="text-sm text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-300 max-sm:text-xs max-sm:font-semibold"
+                  className="text-sm text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-300"
                 >
                   Recordar pregunta
                 </button>
 
-                <p className="text-right text-xs text-slate-500 dark:text-slate-400 max-sm:text-[11px]">
+                <p className="text-right text-xs text-slate-500 dark:text-slate-400">
                   Marcá una opción para continuar.
                 </p>
               </div>
@@ -153,13 +151,13 @@ export default function QuizSession({
         </div>
       </div>
 
-      <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/40 lg:hidden max-sm:px-4 max-sm:py-3">
+      <div className="study-mobile-deck flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/40 lg:hidden">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 max-sm:text-[10px]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
             Mazo actual
           </p>
 
-          <p className="text-base font-semibold text-slate-950 dark:text-white max-sm:text-sm">
+          <p className="text-base font-semibold text-slate-950 dark:text-white">
             {selectedTopic === 'all' ? 'Todas las tarjetas' : selectedTopic}
           </p>
         </div>
