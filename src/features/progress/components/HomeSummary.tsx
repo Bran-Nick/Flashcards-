@@ -46,9 +46,24 @@ export default function HomeSummary() {
                   Sin datos
                 </p>
               ) : (
-                <p className="text-lg font-extrabold text-white">
-                  {accuracyPercentage}%
-                </p>
+                <div className="mt-1 flex flex-col items-center">
+                  <p className="text-lg font-extrabold text-white">
+                    {accuracyPercentage}%
+                  </p>
+                  <div
+                    role="progressbar"
+                    aria-label="Precisión general"
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-valuenow={accuracyPercentage}
+                    className="mt-2 h-1.5 w-32 overflow-hidden rounded-full bg-slate-800"
+                  >
+                    <div
+                      className={`h-full rounded-full transition-all duration-500 motion-reduce:transition-none ${barColor}`}
+                      style={{ width: `${accuracyPercentage}%` }}
+                    />
+                  </div>
+                </div>
               )}
             </div>
 
@@ -57,7 +72,7 @@ export default function HomeSummary() {
             </div>
           </div>
 
-          <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+          <div className="mt-6 grid grid-cols-3 gap-2 text-center">
             <div>
               <CheckCircle2 aria-hidden="true" className="mx-auto text-emerald-400" size={20} />
               <p className="mt-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
