@@ -47,10 +47,10 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
 
         {isExpanded && (
           <div id={answerId} className="border-t border-slate-900/60 pt-4 space-y-3">
-            <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Respuesta
             </p>
-            <p className="text-[0.92rem] leading-relaxed text-slate-800">
+            <p className="text-[0.92rem] leading-relaxed text-slate-600 dark:text-slate-300">
               {card.answer}
             </p>
 
@@ -76,6 +76,7 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
               <Tag aria-hidden="true" size={12} />
               <span className="truncate max-w-[120px]">{card.topic}</span>
             </span>
+
 
             {!isExpanded && needsReview && (
               <span

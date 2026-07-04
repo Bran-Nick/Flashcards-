@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { X, RotateCcw, CheckCircle2, XCircle } from 'lucide-react';
 import { useCardStore } from '../store';
 import type { Card } from '../types';
@@ -10,7 +10,7 @@ interface MetricsModalProps {
 
 export default function MetricsModal({ card, onClose }: MetricsModalProps) {
   const resetCardMetrics = useCardStore((state) => state.resetCardMetrics);
-
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
   const total = card.hits + card.misses;
   const percentage = total === 0 ? 0 : Math.round((card.hits / total) * 100);
   const recentHistory = (card.history ?? []).slice(-10);
@@ -42,10 +42,13 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
   }, [onClose]);
 
   const handleReset = () => {
-    if (window.confirm('¿Resetear las métricas de esta tarjeta? Esta acción no se puede deshacer.')) {
-      resetCardMetrics(card.id);
-      onClose();
-    }
+    setShowResetConfirm(true);
+  };
+
+  const confirmReset = () => {
+    resetCardMetrics(card.id);
+    setShowResetConfirm(false);
+    onClose();
   };
 
   return (
@@ -226,16 +229,16 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
         </div>
 
         {/* Sección informativa */}
-<div className="hidden sm:block rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-3 space-y-1">
-  <p className="text-xs font-bold text-violet-400">
-    ¿Qué significa?
-  </p>
+        <div className="hidden sm:block rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-3 space-y-1">
+          <p className="text-xs font-bold text-violet-400">
+            ¿Qué significa?
+          </p>
 
-  <ul className="text-xs text-slate-400 space-y-0.5 list-disc list-inside">
-    <li>HIT (acierto): el usuario eligió "Lo sabía".</li>
-    <li>MISS (error): el usuario eligió "No lo sabía".</li>
-  </ul>
-</div>
+          <ul className="text-xs text-slate-400 space-y-0.5 list-disc list-inside">
+            <li>HIT (acierto): el usuario eligió "Lo sabía".</li>
+            <li>MISS (error): el usuario eligió "No lo sabía".</li>
+          </ul>
+        </div>
 
         {/* Footer */}
         <div className="flex justify-between items-center gap-2 pt-1 border-t border-slate-800/60 max-sm:pt-3">
@@ -245,9 +248,15 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
             className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-rose-500/30 text-xs font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-500/5 transition-all focus:outline-none focus:ring-2 focus:ring-rose-500 max-sm:px-3"
           >
             <RotateCcw size={13} aria-hidden="true" />
+
             <span>
-              <span className="max-sm:hidden">Resetear métricas de esta tarjeta</span>
-              <span className="hidden max-sm:inline">Resetear métricas</span>
+              <span className="max-sm:hidden">
+                Resetear métricas de esta tarjeta
+              </span>
+
+              <span className="hidden max-sm:inline">
+                Resetear métricas
+              </span>
             </span>
           </button>
 
@@ -260,6 +269,40 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
             <span className="hidden max-sm:inline">Volver</span>
           </button>
         </div>
+
+        {showResetConfirm && (
+          <div
+            role="alertdialog"
+            aria-modal="true"
+            className="rounded-xl border border-rose-200 bg-rose-50/60 p-4 dark:border-rose-900 dark:bg-rose-950/20"
+          >
+            <p className="text-sm font-semibold text-rose-900 dark:text-rose-100">
+              ¿Resetear las métricas?
+            </p>
+
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
+              Esta acción no se puede deshacer.
+            </p>
+
+            <div className="mt-4 flex gap-3">
+              <button
+                type="button"
+                onClick={() => setShowResetConfirm(false)}
+                className="rounded-lg px-3 py-2 text-sm font-semibold"
+              >
+                Cancelar
+              </button>
+
+              <button
+                type="button"
+                onClick={confirmReset}
+                className="rounded-lg bg-rose-600 px-3 py-2 text-sm font-semibold !text-white"
+              >
+                Resetear
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

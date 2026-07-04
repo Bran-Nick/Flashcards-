@@ -7,6 +7,7 @@ import CardsToolbar from '../features/cards/components/CardsToolbar';
 import { usePageTitle } from "../hooks/usePageTitle";
 import PageHeader from '../components/PageHeader';
 import PageShell from '../components/PageShell';
+import ConfirmModal from '../components/ConfirmModal';
 
 const normalizeText = (text: string) =>
   text
@@ -19,6 +20,12 @@ export default function CardsPage() {
   const cards = useCardStore((state) => state.cards);
   const deleteCard = useCardStore((state) => state.deleteCard);
   const resetCards = useCardStore((state) => state.resetCards);
+
+  const [confirmModal, setConfirmModal] = useState<{
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  } | null>(null);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('all');
@@ -42,15 +49,26 @@ export default function CardsPage() {
   const totalCards = safeCards.length;
 
   const handleDeleteCard = (id: string) => {
-    if (window.confirm('¿Estás seguro de que quieres eliminar esta tarjeta?')) {
-      deleteCard(id);
-    }
+    setConfirmModal({
+      title: 'Eliminar tarjeta',
+      message: '¿Estás seguro de que quieres eliminar esta tarjeta?',
+      onConfirm: () => {
+        deleteCard(id);
+        setConfirmModal(null);
+      },
+    });
   };
 
   const handleReset = () => {
-    if (window.confirm('¿Estás seguro de que quieres restaurar las tarjetas semilla iniciales? Esto borrará tus tarjetas personalizadas.')) {
-      resetCards();
-    }
+    setConfirmModal({
+      title: 'Restaurar tarjetas iniciales',
+      message:
+        'Esto borrará tus tarjetas personalizadas y restaurará las tarjetas semilla iniciales.',
+      onConfirm: () => {
+        resetCards();
+        setConfirmModal(null);
+      },
+    });
   };
 
   return (
@@ -118,6 +136,18 @@ export default function CardsPage() {
           selectedTopic={selectedTopic}
         />
       </PageShell>
+      
+      {confirmModal && (
+        <ConfirmModal
+          isOpen={true}
+          title={confirmModal.title}
+          message={confirmModal.message}
+          confirmLabel="Confirmar"
+          cancelLabel="Cancelar"
+          onConfirm={confirmModal.onConfirm}
+          onCancel={() => setConfirmModal(null)}
+        />
+      )}
     </div>
   );
 }
