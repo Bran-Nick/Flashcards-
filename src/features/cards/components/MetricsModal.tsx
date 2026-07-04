@@ -16,10 +16,14 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
   const recentHistory = (card.history ?? []).slice(-10);
 
   const percentageColor =
-    percentage >= 70 ? 'text-emerald-400' : percentage >= 40 ? 'text-amber-400' : 'text-rose-400';
+    percentage >= 70
+      ? 'text-emerald-600 dark:text-emerald-400'
+      : percentage >= 40
+        ? 'text-amber-500 dark:text-amber-400'
+        : 'text-rose-500 dark:text-rose-400';
 
   const ringColor =
-    percentage >= 70 ? '#34d399' : percentage >= 40 ? '#fbbf24' : '#f87171';
+    percentage >= 70 ? '#059669' : percentage >= 40 ? '#d97706' : '#e11d48';
 
   const radius = 28;
   const mobileRadius = 24;
@@ -50,11 +54,11 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
       aria-modal="true"
       aria-labelledby="metrics-title"
       aria-describedby="metrics-description"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 max-sm:items-center"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-xl space-y-5 max-sm:p-6 max-sm:space-y-5"
+        className="relative w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-xl space-y-5 max-sm:max-h-[calc(100svh-2rem)] max-sm:overflow-y-auto max-sm:p-6 max-sm:space-y-5"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -87,12 +91,12 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
         {/* Stats Grid */}
         <div className="grid grid-cols-4 gap-3 max-sm:grid-cols-2">
           {/* Aciertos */}
-          <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 text-center space-y-1 max-sm:p-3">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
+          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-4 text-center space-y-1 max-sm:p-3">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
               <span className="max-sm:hidden">Aciertos (hits)</span>
               <span className="hidden max-sm:inline">Aciertos</span>
             </p>
-            <p className="text-2xl font-extrabold text-emerald-400 max-sm:text-xl">{card.hits}</p>
+            <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 max-sm:text-xl">{card.hits}</p>
           </div>
 
           {/* Errores */}
@@ -203,7 +207,7 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
                   <CheckCircle2
                     key={index}
                     size={22}
-                    className="text-emerald-400 max-sm:size-5"
+                    className="text-emerald-600 dark:text-emerald-400 max-sm:size-5"
                     role="img"
                     aria-label="Acierto"
                   />

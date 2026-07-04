@@ -29,7 +29,7 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
     <>
       {/* Mobile */}
       <div
-        className="md:hidden rounded-2xl border border-slate-800 bg-slate-900/40 p-4 space-y-3"
+        className="md:hidden rounded-2xl border border-slate-800 bg-slate-900/40 p-5 space-y-4"
         role="listitem"
       >
         <button
@@ -40,45 +40,46 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
           aria-label={`${isExpanded ? 'Ocultar' : 'Mostrar'} respuesta de la tarjeta: ${card.question}`}
           className="w-full text-left rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
         >
-          <p className={`text-sm font-semibold text-slate-100 leading-relaxed ${isExpanded ? '' : 'line-clamp-2'}`}>
+          <p className={`text-[clamp(1rem,4.1vw,1.15rem)] font-semibold text-slate-100 leading-relaxed ${isExpanded ? '' : 'line-clamp-2'}`}>
             {card.question}
           </p>
         </button>
 
         {isExpanded && (
-          <div id={answerId} className="border-t border-slate-900/60 pt-3 space-y-2">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+          <div id={answerId} className="border-t border-slate-900/60 pt-4 space-y-3">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
               Respuesta
             </p>
-            <p className="text-sm leading-relaxed text-slate-400">
+            <p className="text-[0.92rem] leading-relaxed text-slate-800">
               {card.answer}
             </p>
 
-            {needsReview && (
-              <span className="inline-flex text-[10px] font-bold uppercase tracking-wider bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-1 rounded-md">
-                ⚠️ Necesita repaso
+            <div className="flex flex-wrap items-center gap-2">
+              {needsReview && (
+                <span className="inline-flex text-[10px] font-bold uppercase tracking-wider bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-1 rounded-md">
+                  ⚠️ Necesita repaso
+                </span>
+              )}
+
+              <span
+                className={`inline-flex text-[10px] font-bold px-2 py-1 rounded-md border uppercase tracking-wider ${difficultyColors[card.difficulty]}`}
+              >
+                {card.difficulty}
               </span>
-            )}
+            </div>
           </div>
         )}
 
-        <div className="border-t border-slate-900/40 pt-3 flex items-center justify-between gap-2">
+        <div className="border-t border-slate-900/40 pt-4 flex items-center justify-between gap-3">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-900 text-slate-400 border border-slate-800 truncate">
-              <Tag aria-hidden="true" size={10} />
-              <span className="truncate max-w-[90px]">{card.topic}</span>
-            </span>
-
-            <span
-              className={`${isExpanded ? 'inline-flex' : 'hidden'
-                } text-[10px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-wider ${difficultyColors[card.difficulty]}`}
-            >
-              {card.difficulty}
+            <span className="flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full bg-slate-900 text-slate-400 border border-slate-800 truncate">
+              <Tag aria-hidden="true" size={12} />
+              <span className="truncate max-w-[120px]">{card.topic}</span>
             </span>
 
             {!isExpanded && needsReview && (
               <span
-                className="flex h-6 w-6 items-center justify-center rounded-full bg-rose-500/15 text-rose-400 border border-rose-500/30"
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-rose-500/15 text-rose-400 border border-rose-500/30"
                 aria-label="Necesita repaso"
                 title="Necesita repaso"
               >
@@ -92,26 +93,26 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
               type="button"
               onClick={() => setShowMetrics(true)}
               aria-label={`Ver métricas de la tarjeta: ${card.question}`}
-              className="flex h-8 w-8 items-center justify-center rounded-xl border border-slate-800 text-slate-400 hover:text-violet-400 hover:border-violet-500/50 hover:bg-violet-500/5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-800 text-slate-400 hover:text-violet-400 hover:border-violet-500/50 hover:bg-violet-500/5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
-              <BarChart2 aria-hidden="true" size={14} />
+              <BarChart2 aria-hidden="true" size={16} />
             </button>
 
             <Link
               to={`/edit/${card.id}`}
               aria-label={`Editar tarjeta: ${card.question}`}
-              className="flex h-8 w-8 items-center justify-center rounded-xl border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-900/80 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-900/80 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
-              <Edit2 aria-hidden="true" size={14} />
+              <Edit2 aria-hidden="true" size={16} />
             </Link>
 
             <button
               type="button"
               onClick={() => onDelete(card.id)}
               aria-label={`Eliminar tarjeta: ${card.question}`}
-              className="flex h-8 w-8 items-center justify-center rounded-xl border border-slate-800 text-slate-500 hover:text-rose-400 hover:bg-rose-500/5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-800 text-slate-500 hover:text-rose-400 hover:bg-rose-500/5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
-              <Trash2 aria-hidden="true" size={14} />
+              <Trash2 aria-hidden="true" size={16} />
             </button>
           </div>
         </div>

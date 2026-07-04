@@ -99,20 +99,20 @@ export default function CardForm() {
         backLabel="Volver al listado"
       />
 
-      <form onSubmit={handleSubmit} className="md:hidden space-y-5" aria-label={isEditing ? 'Editar tarjeta' : 'Crear tarjeta'}>
+      <form onSubmit={handleSubmit} className="mobile-card-form md:hidden space-y-5" aria-label={isEditing ? 'Editar tarjeta' : 'Crear tarjeta'}>
         <div className="space-y-3">
-          <div className="flex items-center justify-between gap-3 text-xs text-slate-500 font-semibold uppercase tracking-wider">
+          <div className="mobile-preview-toolbar flex items-center justify-between gap-3 text-xs text-slate-500 font-semibold uppercase tracking-wider">
             <span className="flex items-center gap-1.5 normal-case tracking-normal text-slate-400">
               <Eye aria-hidden="true" size={14} />
               Selecciona una opción
             </span>
 
-            <div className="flex bg-slate-900 rounded-lg p-0.5 border border-slate-800" role="group" aria-label="Seleccionar lado de la tarjeta">
+            <div className="mobile-side-toggle flex bg-slate-900 rounded-lg p-0.5 border border-slate-800" role="group" aria-label="Seleccionar lado de la tarjeta">
               <button
                 type="button"
                 onClick={() => setPreviewSide('front')}
                 aria-pressed={previewSide === 'front'}
-                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 motion-reduce:transition-none ${previewSide === 'front'
+                className={`mobile-side-toggle-button px-3 py-1 rounded-md text-[10px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 motion-reduce:transition-none ${previewSide === 'front'
                     ? 'bg-violet-600 text-white'
                     : 'text-slate-400 hover:text-slate-200'
                   }`}
@@ -124,7 +124,7 @@ export default function CardForm() {
                 type="button"
                 onClick={() => setPreviewSide('back')}
                 aria-pressed={previewSide === 'back'}
-                className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 motion-reduce:transition-none ${previewSide === 'back'
+                className={`mobile-side-toggle-button px-3 py-1 rounded-md text-[10px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 motion-reduce:transition-none ${previewSide === 'back'
                     ? 'bg-violet-600 text-white'
                     : 'text-slate-400 hover:text-slate-200'
                   }`}
@@ -138,7 +138,7 @@ export default function CardForm() {
             Estás editando el lado de {previewSide === 'front' ? 'pregunta' : 'respuesta'}.
           </p>
 
-          <div className="mobile-form-flip-card">
+          <div className="mobile-form-flip-card mobile-card-preview">
             <div
               className={`mobile-form-flip-inner motion-reduce:transition-none ${previewSide === 'back' ? 'is-flipped' : ''}`}
             >
@@ -219,7 +219,7 @@ export default function CardForm() {
           </div>
         </div>
 
-        <fieldset className="space-y-2">
+        <fieldset className="mobile-card-fieldset space-y-2">
           <legend className="block text-sm font-bold text-slate-400">
             Dificultad
           </legend>
@@ -246,7 +246,7 @@ export default function CardForm() {
           </div>
         </fieldset>
 
-        <div className="space-y-2">
+        <div className="mobile-card-fieldset space-y-2">
           <label htmlFor="mobile-card-topic" className="block text-sm font-bold text-slate-400">
             Tema / Categoría
           </label>
@@ -262,7 +262,7 @@ export default function CardForm() {
           />
         </div>
 
-        <div className="flex justify-end gap-3 border-t border-slate-900 pt-5">
+        <div className="mobile-form-actions flex justify-end gap-3 border-t border-slate-900 pt-5">
           <button
             type="button"
             onClick={() => navigate('/cards')}

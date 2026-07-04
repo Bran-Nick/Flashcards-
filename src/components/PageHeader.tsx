@@ -35,17 +35,17 @@ export default function PageHeader({
             <Link
               to={backTo}
               aria-label={backLabel}
-              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white/70 text-slate-600 shadow-sm transition-colors hover:border-violet-300 hover:text-violet-500 dark:border-slate-800 dark:bg-slate-950/40 dark:text-slate-300 dark:hover:text-violet-400 md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white/70 text-slate-600 shadow-sm transition-colors hover:border-violet-300 hover:text-violet-500 dark:border-slate-800 dark:bg-slate-950/40 dark:text-slate-300 dark:hover:text-violet-400 md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950"
             >
-              <ArrowLeft aria-hidden="true" size={18} />
+              <ArrowLeft aria-hidden="true" size={20} />
             </Link>
           )}
 
           <h1
             className={`min-w-0 flex-1 font-extrabold tracking-tight text-white
     ${variant === 'session'
-                ? 'text-[1.35rem] sm:text-3xl'
-                : 'text-2xl sm:text-3xl'}`}
+                ? 'text-[clamp(1.65rem,7vw,2.1rem)] sm:text-3xl'
+                : 'text-[clamp(1rem,8vw,2.45rem)] sm:text-3xl'}`}
           >
             {title}
           </h1>
@@ -62,7 +62,7 @@ export default function PageHeader({
           <>
             {/* Mobile */}
             {mobileSubtitle !== null && (
-              <div className="mt-3 text-sm text-slate-400 md:hidden">
+              <div className=" mt-3 ml-5 text-[clamp(1rem,4vw,1.15rem)] leading-relaxed text-slate-400 md:hidden">
                 {mobileSubtitle ?? subtitle}
               </div>
             )}

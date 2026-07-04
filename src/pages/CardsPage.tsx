@@ -80,7 +80,7 @@ export default function CardsPage() {
                 type="button"
                 onClick={handleReset}
                 aria-label="Restaurar tarjetas semilla"
-                className="flex items-center justify-center gap-1.5 border border-slate-900 hover:bg-slate-900 text-slate-400 hover:text-slate-200 font-semibold text-xs rounded-xl transition-all h-9 w-9 p-0 sm:h-auto sm:w-auto sm:px-4 sm:py-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                className="flex min-h-10 min-w-10 items-center justify-center gap-1.5 rounded-xl border border-slate-900 p-0 text-xs font-semibold text-slate-400 transition-all hover:bg-slate-900 hover:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:min-h-0 sm:min-w-0 sm:px-4 sm:py-2.5"
                 title="Reiniciar base de datos a tarjetas semillas"
               >
                 <RotateCcw aria-hidden="true" size={16} />
@@ -90,7 +90,7 @@ export default function CardsPage() {
               <Link
                 to="/new"
                 aria-label="Crear nueva tarjeta"
-                className="flex items-center justify-center gap-2 h-9 w-9 p-0 sm:h-auto sm:w-auto sm:px-5 sm:py-2.5 bg-violet-600 hover:bg-violet-500 active:bg-violet-700 text-white font-semibold text-xs rounded-xl transition-all shadow-lg shadow-violet-600/25 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 motion-reduce:transform-none motion-reduce:transition-none"
+                className="flex min-h-10 min-w-10 items-center justify-center gap-2 rounded-xl bg-violet-600 p-0 text-xs font-semibold !text-white shadow-lg shadow-violet-600/25 transition-all hover:bg-violet-500 active:scale-[0.98] active:bg-violet-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 motion-reduce:transform-none motion-reduce:transition-none sm:min-h-0 sm:min-w-0 sm:px-5 sm:py-2.5"
               >
                 <Plus aria-hidden="true" size={17} />
                 <span className="hidden sm:inline">Nueva Tarjeta</span>

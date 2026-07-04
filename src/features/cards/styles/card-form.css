@@ -47,3 +47,41 @@ textarea.mobile-card-textarea {
 .mobile-form-flip-back {
   transform: rotateY(-180deg);
 }
+
+/* Mobile form polish: spacing and touch targets only */
+@media (max-width: 767px) {
+  .mobile-card-form {
+    gap: clamp(1.35rem, 5vw, 1.75rem);
+  }
+
+  .mobile-card-form > .space-y-3 {
+    margin-bottom: clamp(1.15rem, 4vw, 1.55rem);
+  }
+
+  .mobile-preview-toolbar {
+    margin-bottom: clamp(0.8rem, 3.5vw, 1rem);
+  }
+
+  .mobile-side-toggle {
+    padding: 0.25rem;
+    border-radius: 0.75rem;
+  }
+
+  .mobile-side-toggle-button {
+    min-height: 2rem;
+    padding-inline: clamp(0.85rem, 3.5vw, 1rem);
+    font-size: clamp(0.68rem, 2.8vw, 0.78rem);
+  }
+
+  .mobile-card-preview {
+    margin-bottom: clamp(1.35rem, 5vw, 1.75rem);
+  }
+
+  .mobile-card-fieldset {
+    margin-top: clamp(1rem, 4vw, 1.35rem);
+  }
+
+  .mobile-form-actions {
+    margin-top: clamp(1.35rem, 5vw, 1.75rem);
+  }
+}
